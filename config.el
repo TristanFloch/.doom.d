@@ -111,8 +111,8 @@
   (setq org-agenda-span 'week)
   (setq org-agenda-start-with-log-mode '(clock)))
 
-(add-to-list 'org-latex-packages-alist
-             '("AUTO" "babel" t ("pdflatex")))
+; (add-to-list 'org-latex-packages-alist
+;              '("AUTO" "babel" t ("pdflatex")))
 
 (require 'org-download)
 (add-hook 'dired-mode-hook 'org-download-enable) ;; Drag-and-drop to `dired`
