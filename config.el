@@ -209,5 +209,5 @@
 (setq auth-sources '("~/.authinfo.gpg"))
 
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
-
-(remove-hook! 'text-mode-hook #'spell-fu-mode)
+(remove-hook 'text-mode-hook #'spell-fu-mode)
+(add-hook 'nix-mode-hook #'lsp)
