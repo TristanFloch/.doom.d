@@ -88,6 +88,12 @@
                   "* %x %^g\n"
                   :immediate-finish t
                   :prepend t))
+  (org-add-link-type
+   "latex-small-caps" nil
+   (lambda (path desc format)
+     (cond
+      ((eq format 'latex)
+       (format "\\textsc{%s}" desc))))) ;; the path should be left blank
   )
 
 ;; Syncs gcal after capturing an appointment
@@ -121,10 +127,27 @@
 (setq-default org-download-heading-lvl nil)
 
 (add-hook! (c-mode c++-mode)
-  (setq c-default-style "bsd"))
+  (c-set-style "gnu")
+  (after! lsp-mode
+    (setq! lsp-ui-sideline-show-code-actions nil))
+)
 
-;; (load! "/usr/share/clang/clang-format.el")
-;; (require 'clang-format)
+(add-hook! c++-mode
+        (setq! flycheck-clang-language-standard "c++20"))
+
+(add-hook! python-mode
+           (after! lsp-mode
+             (setq! lsp-pylsp-plugins-pylint-args '("--errors-only"))
+             )
+           )
+
+;; TODO refactor using =set-file-templates!=
+(set-file-template! "/main\\.c\\(?:c\\|pp\\)$" :ignore t)
+(set-file-template! "/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
+(set-file-template! "\\.c\\(?:c\\|pp\\)$" :ignore t)
+(set-file-template! "\\.h\\(?:h\\|pp\\|xx\\)$" :ignore t)
+(set-file-template! "\\.h$" :ignore t)
+
 (map! :after lsp-mode
       :map prog-mode-map
       :leader
@@ -133,8 +156,14 @@
 
 (map! :leader
       (:prefix-map ("t" . "toggle")
-       :desc "Doom modeline" "m" #'doom-modeline-mode))
+       :desc "Doom modeline" "m" #'doom-modeline-mode
+       :desc "Vimish fold" "z" 'vimish-fold-toggle
+       ))
 
+(map! :after projectile
+      :leader
+      (:prefix-map ("s" . "search")
+       :desc "Replace in project" "R" 'projectile-replace-regexp))
 
 (after! lsp-mode
   (setq! lsp-headerline-breadcrumb-segments '(project file symbols))
@@ -211,3 +240,25 @@
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 (add-hook 'nix-mode-hook #'lsp)
+
+(remove-hook! 'text-mode-hook #'spell-fu-mode)
+
+;; (after! hydra
+;;   (defhydra+ my/hydra-splitter
+;;     ("h" hydra-move-splitter-left)
+;;     ("j" hydra-move-splitter-down)
+;;     ("k" hydra-move-splitter-up)
+;;     ("l" hydra-move-splitter-right)
+;;     ))
+
+;; (defhydra hydra-splitter (global-map "C-M-s")
+;; "splitter"
+;; ("h" hydra-move-splitter-left)
+;; ("j" hydra-move-splitter-down)
+;; ("k" hydra-move-splitter-up)
+;; ("l" hydra-move-splitter-right))
+
+;; (map! :leader
+;;       (:prefix-map ("w" . "window")
+;;        :desc "Navigation" "SPC" '+hydra/window-nav/body))
+
