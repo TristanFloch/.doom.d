@@ -36,16 +36,6 @@
 (after! treemacs
   (setq treemacs-show-cursor t))
 
-(setq! fancy-splash-image "~/.doom.d/doom-256.png")
-
-;; custom color for one theme
-;; (after! solaire-mode
-;;   (solaire-global-mode -1))
-;; (custom-set-faces
-;;   '(default ((t (:background "#000000"))))
-;;   '(hl-line ((t (:background "#000000"))))
-;;  )
-
 (setq doom-font (font-spec :family "DejaVu Sans Mono" :size 16))
 
 ;; (display-battery-mode t)
@@ -70,6 +60,26 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; Only used if doom-dashboard is enabled
+(setq! fancy-splash-image (concat doom-private-dir "doom-256.png"))
+
+;; (use-package! dashboard
+;;   :init
+;;   (setq dashboard-startup-banner (concat doom-private-dir "doom-256.png"))
+;;   (setq dashboard-items '((recents . 5)
+;;                           (projects . 5)
+;;                           (bookmarks . 5)
+;;                           (agenda . 5)))
+;;   (setq dashboard-set-heading-icons t)
+;;   (setq dashboard-set-file-icons t)
+;;   :config
+;;   (dashboard-setup-startup-hook)
+;;   (setq initial-buffer-choice (lambda() (get-buffer "*dashboard*")))
+;;   (setq doom-fallback-buffer-name "*dashboard*")
+;;   (setq doom-fallback-buffer "*dashboard*")
+;;   )
+
 
 ;; Sets a scroll offset (as in Vim)
 (setq scroll-margin 10)
