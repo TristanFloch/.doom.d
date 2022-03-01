@@ -243,7 +243,7 @@
 
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 (remove-hook 'text-mode-hook #'spell-fu-mode)
-(add-hook 'nix-mode-hook #'lsp)
+;; (add-hook 'nix-mode-hook #'lsp) ; make opening nix files laggy
 (remove-hook! 'text-mode-hook #'spell-fu-mode)
 
 (load! "lisp/tiger.el")
