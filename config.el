@@ -97,9 +97,9 @@
                  :immediate-finish t))
   (add-to-list 'org-capture-templates
                '("l" "Link" entry (file+headline "links.org" "Links")
-                  "* %x %^g\n"
-                  :immediate-finish t
-                  :prepend t))
+                 "* %x %^g\n"
+                 :immediate-finish t
+                 :prepend t))
   (org-add-link-type
    "latex-small-caps" nil
    (lambda (path desc format)
@@ -144,10 +144,10 @@
     (setq! lsp-ui-sideline-show-code-actions nil))
   )
 
-(map! :map '(c-mode-map c++-mode-map)
-      :leader
-      (:prefix-map ("c" . "code")
-       :desc "Clang format buffer" "f" #'clang-format-buffer))
+;; (map! :map '(c-mode-map c++-mode-map)
+;;       :leader
+;;       (:prefix-map ("c" . "code")
+;;        :desc "Clang format buffer" "f" #'clang-format-buffer))
 
 (add-hook! c++-mode
   (setq! flycheck-clang-language-standard "c++20")
@@ -169,11 +169,11 @@
  '("/Makefile$" :ignore t)
  )
 
-;; (map! :after lsp-mode
-;;       :map prog-mode-map
-;;       :leader
-;;       (:prefix-map ("c" . "code")
-;;        :desc "LSP format buffer" "f" #'lsp-format-buffer))
+(map! :after lsp-mode
+      :map prog-mode-map
+      :leader
+      (:prefix-map ("c" . "code")
+       :desc "LSP format buffer" "f" #'lsp-format-buffer))
 
 (map! :leader
       (:prefix-map ("t" . "toggle")
@@ -291,4 +291,3 @@
 ;; (map! :leader
 ;;       (:prefix-map ("w" . "window")
 ;;        :desc "Navigation" "SPC" '+hydra/window-nav/body))
-
