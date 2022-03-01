@@ -145,12 +145,14 @@
              )
            )
 
-;; TODO refactor using =set-file-templates!=
-(set-file-template! "/main\\.c\\(?:c\\|pp\\)$" :ignore t)
-(set-file-template! "/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
-(set-file-template! "\\.c\\(?:c\\|pp\\)$" :ignore t)
-(set-file-template! "\\.h\\(?:h\\|pp\\|xx\\)$" :ignore t)
-(set-file-template! "\\.h$" :ignore t)
+(set-file-templates!
+        '("/main\\.c\\(?:c\\|pp\\)$" :ignore t)
+        '("/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
+        '("\\.c\\(?:c\\|pp\\)$" :ignore t)
+        '("\\.h\\(?:h\\|pp\\|xx\\)$" :trigger "__pragma-once" :mode c++-mode)
+        '("\\.h$" :ignore t)
+        '("/Makefile$" :ignore t)
+        )
 
 (map! :after lsp-mode
       :map prog-mode-map
