@@ -58,3 +58,4 @@
 (package! csv-mode)
 (package! bison-mode)
 (package! arduino-mode)
+(package! aggressive-indent-mode)

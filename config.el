@@ -119,8 +119,8 @@
   (setq org-agenda-span 'week)
   (setq org-agenda-start-with-log-mode '(clock)))
 
-; (add-to-list 'org-latex-packages-alist
-;              '("AUTO" "babel" t ("pdflatex")))
+                                        ; (add-to-list 'org-latex-packages-alist
+                                        ;              '("AUTO" "babel" t ("pdflatex")))
 
 (require 'org-download)
 (add-hook 'dired-mode-hook 'org-download-enable) ;; Drag-and-drop to `dired`
@@ -132,27 +132,27 @@
   (c-set-style "user")
   (after! lsp-mode
     (setq! lsp-ui-sideline-show-code-actions nil))
-)
+  )
 
 (add-hook! c++-mode
-        (setq! flycheck-clang-language-standard "c++20")
-        (setq! flycheck-gcc-language-standard "c++20")
-        )
+  (setq! flycheck-clang-language-standard "c++20")
+  (setq! flycheck-gcc-language-standard "c++20")
+  )
 
 (add-hook! python-mode
-           (after! lsp-mode
-             (setq! lsp-pylsp-plugins-pylint-args '("--errors-only"))
-             )
-           )
+  (after! lsp-mode
+    (setq! lsp-pylsp-plugins-pylint-args '("--errors-only"))
+    )
+  )
 
 (set-file-templates!
-        '("/main\\.c\\(?:c\\|pp\\)$" :ignore t)
-        '("/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
-        '("\\.c\\(?:c\\|pp\\)$" :ignore t)
-        '("\\.h\\(?:h\\|pp\\|xx\\)$" :trigger "__pragma-once" :mode c++-mode)
-        '("\\.h$" :ignore t)
-        '("/Makefile$" :ignore t)
-        )
+ '("/main\\.c\\(?:c\\|pp\\)$" :ignore t)
+ '("/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
+ '("\\.c\\(?:c\\|pp\\)$" :ignore t)
+ '("\\.h\\(?:h\\|pp\\|xx\\)$" :trigger "__pragma-once" :mode c++-mode)
+ '("\\.h$" :ignore t)
+ '("/Makefile$" :ignore t)
+ )
 
 (map! :after lsp-mode
       :map prog-mode-map
@@ -255,6 +255,8 @@
 (add-to-list 'auto-mode-alist '("\\.rasi\\'" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.ll\\'" . bison-mode))
 (add-to-list 'auto-mode-alist '("\\.yy\\'" . bison-mode))
+
+(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 
 ;; (after! hydra
 ;;   (defhydra+ my/hydra-splitter
