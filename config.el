@@ -138,11 +138,16 @@
 (setq-default org-download-image-dir "./.images/")
 (setq-default org-download-heading-lvl nil)
 
-(add-hook! (c-mode c++-mode)
+(add-hook! '(c-mode c++-mode)
   (c-set-style "user")
   (after! lsp-mode
     (setq! lsp-ui-sideline-show-code-actions nil))
   )
+
+(map! :map '(c-mode-map c++-mode-map)
+      :leader
+      (:prefix-map ("c" . "code")
+       :desc "Clang format buffer" "f" #'clang-format-buffer))
 
 (add-hook! c++-mode
   (setq! flycheck-clang-language-standard "c++20")
@@ -164,11 +169,11 @@
  '("/Makefile$" :ignore t)
  )
 
-(map! :after lsp-mode
-      :map prog-mode-map
-      :leader
-      (:prefix-map ("c" . "code")
-       :desc "Format buffer" "f" #'lsp-format-buffer))
+;; (map! :after lsp-mode
+;;       :map prog-mode-map
+;;       :leader
+;;       (:prefix-map ("c" . "code")
+;;        :desc "LSP format buffer" "f" #'lsp-format-buffer))
 
 (map! :leader
       (:prefix-map ("t" . "toggle")
