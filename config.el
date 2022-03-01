@@ -36,6 +36,8 @@
 (after! treemacs
   (setq treemacs-show-cursor t))
 
+(setq! fancy-splash-image "~/.doom.d/doom-256.png")
+
 ;; custom color for one theme
 ;; (after! solaire-mode
 ;;   (solaire-global-mode -1))
