@@ -129,13 +129,15 @@
 (setq-default org-download-heading-lvl nil)
 
 (add-hook! (c-mode c++-mode)
-  (c-set-style "gnu")
+  (c-set-style "user")
   (after! lsp-mode
     (setq! lsp-ui-sideline-show-code-actions nil))
 )
 
 (add-hook! c++-mode
-        (setq! flycheck-clang-language-standard "c++20"))
+        (setq! flycheck-clang-language-standard "c++20")
+        (setq! flycheck-gcc-language-standard "c++20")
+        )
 
 (add-hook! python-mode
            (after! lsp-mode
