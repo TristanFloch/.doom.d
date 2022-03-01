@@ -244,6 +244,14 @@
 (add-hook 'nix-mode-hook #'lsp)
 (remove-hook! 'text-mode-hook #'spell-fu-mode)
 
+(load! "lisp/tiger.el")
+(autoload 'tiger-mode "tiger" "Load tiger-mode" t)
+
+(add-to-list 'auto-mode-alist '("\\.ti[gh]$" . tiger-mode))
+(add-to-list 'auto-mode-alist '("\\.rasi\\'" . css-mode))
+(add-to-list 'auto-mode-alist '("\\.ll\\'" . bison-mode))
+(add-to-list 'auto-mode-alist '("\\.yy\\'" . bison-mode))
+
 ;; (after! hydra
 ;;   (defhydra+ my/hydra-splitter
 ;;     ("h" hydra-move-splitter-left)
