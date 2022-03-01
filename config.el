@@ -62,7 +62,10 @@
 ;; they are implemented.
 
 ;; Only used if doom-dashboard is enabled
-(setq! fancy-splash-image (concat doom-private-dir "doom-256.png"))
+
+(setq! my/data-dir (concat doom-private-dir "data/"))
+
+(setq! fancy-splash-image (concat my/data-dir "doom-256.png"))
 
 ;; (use-package! dashboard
 ;;   :init
