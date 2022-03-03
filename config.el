@@ -286,6 +286,8 @@
 (load! "lisp/tiger.el")
 (autoload 'tiger-mode "tiger" "Load tiger-mode" t)
 
+(load! "lisp/kconfig.el")
+
 (add-to-list 'auto-mode-alist '("\\.ti[gh]$" . tiger-mode))
 (add-to-list 'auto-mode-alist '("\\.rasi\\'" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.ll\\'" . bison-mode))
