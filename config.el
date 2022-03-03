@@ -270,8 +270,7 @@
         mu4e-view-use-gnus t))
 
 (setq gnus-fetch-old-headers t) ;; show unread groups
-(setq gnus-select-method '(nntp "news.epita.fr"))
-
+(setq gnus-select-method '(nntp "news.cri.epita.fr"))
 (map! :leader
       (:prefix-map ("o" . "open")
        :desc "Gnus" "g" #'gnus))
