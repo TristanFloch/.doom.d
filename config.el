@@ -64,6 +64,11 @@
 ;; Only used if doom-dashboard is enabled
 
 (setq! my/data-dir (concat doom-private-dir "data/"))
+(defun my/file-to-string (file)
+  "File to string function"
+  (with-temp-buffer
+    (insert-file-contents file)
+    (string-trim (buffer-string))))
 
 (setq! fancy-splash-image (concat my/data-dir "doom-256.png"))
 
@@ -111,8 +116,20 @@
        (format "\\textsc{%s}" desc))))) ;; the path should be left blank
   )
 
-;; Syncs gcal after capturing an appointment
-;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+(require 'org-gcal)
+(setq
+ org-gcal-auto-archive nil ;; Temporary fix until https://github.com/kidd/org-gcal.el/issues/172 is merged
+ org-gcal-client-id "517191471377-0g7snp1jneht2s8tmqth900nf13t9vbl.apps.googleusercontent.com"
+ org-gcal-client-secret (my/file-to-string (concat my/data-dir "org-gcal-client-secret"))
+ org-gcal-fetch-file-alist (mapcar '(lambda (key-val)
+                                      (let ((lhs (car key-val))
+                                            (rhs (concat org-directory "calendars/" (cdr key-val))))
+                                        (cons lhs rhs)))
+                                   '(("tristan.floch@gmail.com" . "gcal.org")
+                                     ("cvc5giinpq8llis9l19ur7e7kt6unuv2@import.calendar.google.com" . "gistre.org")
+                                     ("cttim40rtokh1rnr2msli7eusf8v7lls@import.calendar.google.com" . "shifts.org")
+                                     ("ppdgco17tdub1thuaeqq402c0n0s9nen@import.calendar.google.com" . "office-365.org")
+                                     )))
 
 (after! company
   (setq company-idle-delay 0))
@@ -130,10 +147,10 @@
 ;; Weekly view in the agenda and log of what I've done during the day
 (after! org-agenda
   (setq org-agenda-span 'week)
-  (setq org-agenda-start-with-log-mode '(clock)))
+  (setq org-agenda-start-with-log-mode '(clock))
+  (add-to-list 'org-agenda-files (concat org-directory "calendars/"))
+  )
 
-                                        ; (add-to-list 'org-latex-packages-alist
-                                        ;              '("AUTO" "babel" t ("pdflatex")))
 
 (require 'org-download)
 (add-hook 'dired-mode-hook 'org-download-enable) ;; Drag-and-drop to `dired`
