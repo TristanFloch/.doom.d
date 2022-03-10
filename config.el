@@ -26,6 +26,9 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 
+(setq doom-font (font-spec :family "DejaVuSansMono Nerd Font" :size 16)
+      doom-variable-pitch-font (font-spec :family "DejaVu Sans" :size 16))
+
 (setq doom-theme 'doom-dracula)
 ;; (setq doom-palenight-padded-modeline t)
 ;; (setq doom-theme 'doom-vibrant)
@@ -35,8 +38,6 @@
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 (after! treemacs
   (setq treemacs-show-cursor t))
-
-(setq doom-font (font-spec :family "DejaVu Sans Mono" :size 16))
 
 ;; (display-battery-mode t)
 
