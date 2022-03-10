@@ -60,3 +60,4 @@
 (package! arduino-mode)
 (package! aggressive-indent-mode)
 (package! dashboard :disable t)
+(package! udev-mode)
