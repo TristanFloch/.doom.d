@@ -100,9 +100,8 @@
         org-superstar-headline-bullets-list '("◉" "○" "✸" "✿" "✤" "✜" "◆" "▶"))
   (add-to-list 'org-capture-templates
                '("b" "Book" entry (file+headline "books.org" "Books")
-                 "* %^{Author} - %^{Title} %^g:%\1:\n"
-                 :prepend t
-                 :immediate-finish t))
+                 "* %^{Author} - %^{Title} %^g\n"
+                 :prepend t))
   (add-to-list 'org-capture-templates
                '("l" "Link" entry (file+headline "links.org" "Links")
                  "* %x %^g\n"
