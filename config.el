@@ -197,7 +197,7 @@
 
 (map! :leader
       (:prefix-map ("t" . "toggle")
-       :desc "Doom modeline" "m" #'doom-modeline-mode
+       :desc "Doom modeline" "m" #'hide-mode-line-mode
        :desc "Vimish fold" "z" 'vimish-fold-toggle
        ))
 
