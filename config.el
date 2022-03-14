@@ -73,24 +73,6 @@
 
 (setq! fancy-splash-image (concat my/data-dir "doom-256.png"))
 
-;; (use-package! dashboard
-;;   :init
-;;   (setq dashboard-startup-banner (concat doom-private-dir "doom-256.png"))
-;;   (setq dashboard-items '((recents . 5)
-;;                           (projects . 5)
-;;                           (bookmarks . 5)
-;;                           (agenda . 5)))
-;;   (setq dashboard-set-heading-icons t)
-;;   (setq dashboard-set-file-icons t)
-;;   :config
-;;   (dashboard-setup-startup-hook)
-;;   (setq initial-buffer-choice (lambda() (get-buffer "*dashboard*")))
-;;   (setq doom-fallback-buffer-name "*dashboard*")
-;;   (setq doom-fallback-buffer "*dashboard*")
-;;   )
-
-
-;; Sets a scroll offset (as in Vim)
 (setq scroll-margin 10)
 
 (setq org-directory "~/Documents/orgfiles/")
@@ -282,15 +264,13 @@
 ;; (add-hook 'nix-mode-hook #'lsp) ; make opening nix files laggy
 (remove-hook! 'text-mode-hook #'spell-fu-mode)
 
-(load! "lisp/tiger.el")
-(autoload 'tiger-mode "tiger" "Load tiger-mode" t)
-
 (load! "lisp/kconfig.el")
 
+(load! "lisp/tiger.el")
 (add-to-list 'auto-mode-alist '("\\.ti[gh]$" . tiger-mode))
-(add-to-list 'auto-mode-alist '("\\.rasi\\'" . css-mode))
-(add-to-list 'auto-mode-alist '("\\.ll\\'" . bison-mode))
-(add-to-list 'auto-mode-alist '("\\.yy\\'" . bison-mode))
+
+(use-package! bison-mode
+  :mode ("\\.ll\\'" "\\.yy\\'"))
 
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 
