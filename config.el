@@ -163,6 +163,7 @@
   )
 
 (set-file-templates!
+ '(c-mode :ignore t)
  '("/main\\.c\\(?:c\\|pp\\)$" :ignore t)
  '("/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
  '("\\.c\\(?:c\\|pp\\)$" :ignore t)
@@ -187,6 +188,10 @@
       :leader
       (:prefix-map ("s" . "search")
        :desc "Replace in project" "R" 'projectile-replace-regexp))
+
+(map! :leader
+      (:prefix-map ("o" . "open")
+       :desc "Calculator" "c" 'calc))
 
 (after! lsp-mode
   (setq! lsp-headerline-breadcrumb-segments '(project file symbols))
