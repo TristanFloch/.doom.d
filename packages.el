@@ -49,11 +49,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-(package! org-superstar)
 (package! clang-format)
-(package! org-gcal)
-(package! org-download)
-;; (package! ada-mode)
 (package! fish-mode)
 (package! csv-mode)
 (package! bison-mode)
@@ -61,3 +57,5 @@
 (package! aggressive-indent-mode)
 (package! dashboard :disable t)
 (package! udev-mode)
+(package! tree-sitter)
+(package! tree-sitter-langs)

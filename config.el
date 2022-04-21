@@ -272,23 +272,23 @@
 (use-package! bison-mode
   :mode ("\\.ll\\'" "\\.yy\\'"))
 
+(load! "lisp/heptagon.el")
+(after! hept-mode
+  (setq! tab-width 2))
+
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 
-;; (after! hydra
-;;   (defhydra+ my/hydra-splitter
-;;     ("h" hydra-move-splitter-left)
-;;     ("j" hydra-move-splitter-down)
-;;     ("k" hydra-move-splitter-up)
-;;     ("l" hydra-move-splitter-right)
-;;     ))
+(use-package! tree-sitter
+  :hook
+  (c++-mode     . tree-sitter-mode)
+  (c-mode       . tree-sitter-mode)
+  (python-mode  . tree-sitter-mode)
+  (nix-mode     . tree-sitter-mode)
+  (rust-mode    . tree-sitter-mode)
+  (haskell-mode . tree-sitter-mode)
+  :config
+  ;; (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
-;; (defhydra hydra-splitter (global-map "C-M-s")
-;; "splitter"
-;; ("h" hydra-move-splitter-left)
-;; ("j" hydra-move-splitter-down)
-;; ("k" hydra-move-splitter-up)
-;; ("l" hydra-move-splitter-right))
-
-;; (map! :leader
-;;       (:prefix-map ("w" . "window")
-;;        :desc "Navigation" "SPC" '+hydra/window-nav/body))
+(use-package! tree-sitter-langs
+  :after tree-sitter)
