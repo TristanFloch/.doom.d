@@ -26,8 +26,8 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 
-(setq doom-font (font-spec :family "DejaVuSansMono Nerd Font" :size 16)
-      doom-variable-pitch-font (font-spec :family "DejaVu Sans" :size 16))
+(setq doom-font (font-spec :family "Source Code Pro" :size 17)
+      doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 18))
 
 (setq doom-theme 'doom-dracula)
 ;; (setq doom-palenight-padded-modeline t)
