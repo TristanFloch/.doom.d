@@ -193,6 +193,11 @@
       (:prefix-map ("o" . "open")
        :desc "Calculator" "c" 'calc))
 
+(map! :after rjsx-mode
+      :map rjsx-mode-map
+      (:prefix-map "C-c"
+       "C-c" 'nodejs-repl-send-buffer))
+
 (after! lsp-mode
   (setq! lsp-headerline-breadcrumb-segments '(project file symbols))
   (setq! lsp-headerline-breadcrumb-enable t)
@@ -291,6 +296,7 @@
   (nix-mode     . tree-sitter-mode)
   (rust-mode    . tree-sitter-mode)
   (haskell-mode . tree-sitter-mode)
+  (rjsx-mode . tree-sitter-mode)
   :config
   ;; (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
