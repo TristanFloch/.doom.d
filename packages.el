@@ -53,7 +53,7 @@
 (package! fish-mode)
 (package! csv-mode)
 (package! bison-mode)
-(package! arduino-mode)
+;; (package! arduino-mode)
 (package! aggressive-indent-mode)
 (package! dashboard :disable t)
 (package! udev-mode)
