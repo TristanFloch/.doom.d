@@ -303,3 +303,7 @@
 
 (use-package! tree-sitter-langs
   :after tree-sitter)
+
+(after! lsp-python-ms
+  (setq lsp-python-ms-executable (executable-find "python-language-server"))
+  (set-lsp-priority! 'mspyls 1))
