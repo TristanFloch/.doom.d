@@ -57,5 +57,3 @@
 (package! aggressive-indent-mode)
 (package! dashboard :disable t)
 (package! udev-mode)
-(package! tree-sitter)
-(package! tree-sitter-langs)

@@ -288,22 +288,6 @@
 
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 
-(use-package! tree-sitter
-  :hook
-  (c++-mode     . tree-sitter-mode)
-  (c-mode       . tree-sitter-mode)
-  (python-mode  . tree-sitter-mode)
-  (nix-mode     . tree-sitter-mode)
-  (rust-mode    . tree-sitter-mode)
-  (haskell-mode . tree-sitter-mode)
-  (rjsx-mode . tree-sitter-mode)
-  :config
-  ;; (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
-(use-package! tree-sitter-langs
-  :after tree-sitter)
-
 (after! lsp-python-ms
   (setq lsp-python-ms-executable (executable-find "python-language-server"))
   (set-lsp-priority! 'mspyls 1))
