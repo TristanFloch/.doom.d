@@ -146,11 +146,6 @@
     (setq! lsp-ui-sideline-show-code-actions nil))
   )
 
-;; (map! :map '(c-mode-map c++-mode-map)
-;;       :leader
-;;       (:prefix-map ("c" . "code")
-;;        :desc "Clang format buffer" "f" #'clang-format-buffer))
-
 (add-hook! c++-mode
   (setq! flycheck-clang-language-standard "c++20")
   (setq! flycheck-gcc-language-standard "c++20")
@@ -171,12 +166,6 @@
  '("\\.h$" :ignore t)
  '("/Makefile$" :ignore t)
  )
-
-(map! :after lsp-mode
-      :map prog-mode-map
-      :leader
-      (:prefix-map ("c" . "code")
-       :desc "LSP format buffer" "f" #'lsp-format-buffer))
 
 (map! :leader
       (:prefix-map ("t" . "toggle")
@@ -291,3 +280,5 @@
 (after! lsp-python-ms
   (setq lsp-python-ms-executable (executable-find "python-language-server"))
   (set-lsp-priority! 'mspyls 1))
+
+(setq-hook! 'nix-mode-hook +format-with-lsp nil)
