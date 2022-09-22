@@ -282,3 +282,9 @@
   (set-lsp-priority! 'mspyls 1))
 
 (setq-hook! 'nix-mode-hook +format-with-lsp nil)
+
+(after! org-noter
+  (map! :map pdf-view-mode-map
+        :ni "i" 'org-noter-insert-note)
+  (setq! org-noter-always-create-frame nil
+         org-noter-doc-split-fraction '(0.6 0.4)))
