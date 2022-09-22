@@ -80,7 +80,8 @@
   (require 'org-superstar)
   (add-hook 'org-mode-hook (lambda() (org-superstar-mode 1)))
   (setq org-ellipsis " ▾"
-        org-superstar-headline-bullets-list '("◉" "○" "✸" "✿" "✤" "✜" "◆" "▶"))
+        org-format-latex-options (plist-put org-format-latex-options :scale 0.55) ;; might be specific to my system
+        )
   (add-to-list 'org-capture-templates
                '("b" "Book" entry (file+headline "books.org" "Books")
                  "* %^{Author} - %^{Title} %^g\n"
