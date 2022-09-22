@@ -263,17 +263,11 @@
 ;; (add-hook 'nix-mode-hook #'lsp) ; make opening nix files laggy
 (remove-hook! 'text-mode-hook #'spell-fu-mode)
 
-(load! "lisp/kconfig.el")
-
-(load! "lisp/tiger.el")
-(add-to-list 'auto-mode-alist '("\\.ti[gh]$" . tiger-mode))
+;; (load! "lisp/tiger.el")
+;; (add-to-list 'auto-mode-alist '("\\.ti[gh]$" . tiger-mode))
 
 (use-package! bison-mode
   :mode ("\\.ll\\'" "\\.yy\\'"))
-
-(load! "lisp/heptagon.el")
-(after! hept-mode
-  (setq! tab-width 2))
 
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 
