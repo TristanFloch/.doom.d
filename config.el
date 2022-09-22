@@ -101,7 +101,7 @@
 
 (require 'org-gcal)
 (setq
- org-gcal-auto-archive nil ;; Temporary fix until https://github.com/kidd/org-gcal.el/issues/172 is merged
+ org-gcal-auto-archive t
  org-gcal-client-id "517191471377-0g7snp1jneht2s8tmqth900nf13t9vbl.apps.googleusercontent.com"
  org-gcal-client-secret (my/file-to-string (concat my/data-dir "org-gcal-client-secret"))
  org-gcal-fetch-file-alist (mapcar '(lambda (key-val)
