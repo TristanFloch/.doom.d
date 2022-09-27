@@ -64,7 +64,7 @@
 
 ;; Only used if doom-dashboard is enabled
 
-(setq! my/data-dir (concat doom-private-dir "data/"))
+(setq! my/data-dir (concat doom-user-dir "data/"))
 (defun my/file-to-string (file)
   "File to string function"
   (with-temp-buffer
