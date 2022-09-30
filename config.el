@@ -176,12 +176,12 @@
 
 (map! :after projectile
       :leader
-      (:prefix-map ("s" . "search")
-       :desc "Replace in project" "R" 'projectile-replace-regexp))
+      :prefix "s"
+      :desc "Replace in project" "R" 'projectile-replace-regexp)
 
 (map! :leader
-      (:prefix-map ("o" . "open")
-       :desc "Calculator" "c" 'calc))
+      :prefix "o"
+      :desc "Calculator" "c" 'calc)
 
 (map! :after rjsx-mode
       :map rjsx-mode-map
