@@ -80,7 +80,9 @@
   (require 'org-superstar)
   (add-hook 'org-mode-hook (lambda() (org-superstar-mode 1)))
   (setq org-ellipsis " ▾"
-        org-format-latex-options (plist-put org-format-latex-options :scale 0.55) ;; might be specific to my system
+        ;; org-format-latex-options (plist-put org-format-latex-options :scale 0.55) ;; might be specific to my system
+        org-startup-folded t
+        org-cycle-include-plain-lists 'integrate
         )
   (add-to-list 'org-capture-templates
                '("b" "Book" entry (file+headline "books.org" "Books")
@@ -283,3 +285,13 @@
         :ni "i" 'org-noter-insert-note)
   (setq! org-noter-always-create-frame nil
          org-noter-doc-split-fraction '(0.6 0.4)))
+
+(defun my/org-present-mode ()
+  "Present an org file using big font and zen mode"
+  (interactive)
+  (if (eq major-mode 'org-mode)
+      (progn;; (+zen/toggle-fullscreen)
+        (setq display-line-numbers nil)
+        (doom-big-font-mode 1)
+        (+zen/toggle-fullscreen))
+    (message "Org mode is not enabled in this buffer")))
