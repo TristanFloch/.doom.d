@@ -278,6 +278,9 @@
   (setq lsp-python-ms-executable (executable-find "python-language-server"))
   (set-lsp-priority! 'mspyls 1))
 
+(add-hook 'rustic-mode-hook
+          (lambda() (setq rustic-cargo-bin (executable-find "cargo"))))
+
 (setq-hook! 'nix-mode-hook +format-with-lsp nil)
 
 (after! org-noter
