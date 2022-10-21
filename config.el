@@ -166,7 +166,7 @@
  '("/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
  '("\\.c\\(?:c\\|pp\\)$" :ignore t)
  '("\\.h\\(?:h\\|pp\\|xx\\)$" :trigger "__pragma-once" :mode c++-mode)
- '("\\.h$" :ignore t)
+ '("\\.h$" :trigger "__h" :mode c-mode)
  '("/Makefile$" :ignore t)
  )
 
