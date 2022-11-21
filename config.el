@@ -101,20 +101,20 @@
        (format "\\textsc{%s}" desc))))) ;; the path should be left blank
   )
 
-(require 'org-gcal)
-(setq
- org-gcal-auto-archive t
- org-gcal-client-id "517191471377-0g7snp1jneht2s8tmqth900nf13t9vbl.apps.googleusercontent.com"
- org-gcal-client-secret (my/file-to-string (concat my/data-dir "org-gcal-client-secret"))
- org-gcal-fetch-file-alist (mapcar '(lambda (key-val)
-                                      (let ((lhs (car key-val))
-                                            (rhs (concat org-directory "calendars/" (cdr key-val))))
-                                        (cons lhs rhs)))
-                                   '(("tristan.floch@gmail.com" . "gcal.org")
-                                     ("cvc5giinpq8llis9l19ur7e7kt6unuv2@import.calendar.google.com" . "gistre.org")
-                                     ("cttim40rtokh1rnr2msli7eusf8v7lls@import.calendar.google.com" . "shifts.org")
-                                     ("ppdgco17tdub1thuaeqq402c0n0s9nen@import.calendar.google.com" . "office-365.org")
-                                     )))
+(after! org-gcal
+  (setq
+   org-gcal-auto-archive t
+   org-gcal-client-id "517191471377-0g7snp1jneht2s8tmqth900nf13t9vbl.apps.googleusercontent.com"
+   org-gcal-client-secret (my/file-to-string (concat my/data-dir "org-gcal-client-secret"))
+   org-gcal-fetch-file-alist (mapcar #'(lambda (key-val)
+                                         (let ((lhs (car key-val))
+                                               (rhs (concat org-directory "calendars/" (cdr key-val))))
+                                           (cons lhs rhs)))
+                                     '(("tristan.floch@gmail.com" . "gcal.org")
+                                       ("cvc5giinpq8llis9l19ur7e7kt6unuv2@import.calendar.google.com" . "gistre.org")
+                                       ("cttim40rtokh1rnr2msli7eusf8v7lls@import.calendar.google.com" . "shifts.org")
+                                       ("ppdgco17tdub1thuaeqq402c0n0s9nen@import.calendar.google.com" . "office-365.org")
+                                       ))))
 
 (after! company
   (setq company-idle-delay 0))
@@ -133,15 +133,11 @@
 (after! org-agenda
   (setq org-agenda-span 'week)
   (setq org-agenda-start-with-log-mode '(clock))
-  (add-to-list 'org-agenda-files (concat org-directory "calendars/"))
-  )
+  (add-to-list 'org-agenda-files (concat org-directory "calendars/")))
 
-
-(require 'org-download)
-(add-hook 'dired-mode-hook 'org-download-enable) ;; Drag-and-drop to `dired`
-(add-hook 'org-mode-hook 'org-download-enable)
-(setq-default org-download-image-dir "./.images/")
-(setq-default org-download-heading-lvl nil)
+(after! org-download
+  (setq-default org-download-image-dir "./.images/"
+                setq-default org-download-heading-lvl nil))
 
 (add-hook! '(c-mode c++-mode)
   (c-set-style "user")
@@ -264,13 +260,6 @@
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 ;; (add-hook 'nix-mode-hook #'lsp) ; make opening nix files laggy
-(remove-hook! 'text-mode-hook #'spell-fu-mode)
-
-;; (load! "lisp/tiger.el")
-;; (add-to-list 'auto-mode-alist '("\\.ti[gh]$" . tiger-mode))
-
-(use-package! bison-mode
-  :mode ("\\.ll\\'" "\\.yy\\'"))
 
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 

@@ -49,9 +49,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-(package! clang-format)
 (package! csv-mode)
-(package! bison-mode)
 ;; (package! arduino-mode)
 (package! aggressive-indent-mode)
 (package! udev-mode)
