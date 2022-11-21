@@ -167,10 +167,10 @@
  )
 
 (map! :leader
-      (:prefix-map ("t" . "toggle")
-       :desc "Doom modeline" "m" #'hide-mode-line-mode
-       :desc "Vimish fold" "z" 'vimish-fold-toggle
-       ))
+      :prefix "t"
+      :desc "Doom modeline" "m" #'hide-mode-line-mode
+      :desc "Vimish fold" "z" 'vimish-fold-toggle
+      )
 
 (map! :after projectile
       :leader
@@ -181,10 +181,10 @@
       :prefix "o"
       :desc "Calculator" "c" 'calc)
 
-(map! :after rjsx-mode
-      :map rjsx-mode-map
-      (:prefix-map "C-c"
-       "C-c" 'nodejs-repl-send-buffer))
+;; (map! :after rjsx-mode
+;;       :map rjsx-mode-map
+;;       (:prefix-map "C-c"
+;;                    "C-c" 'nodejs-repl-send-buffer))
 
 (after! lsp-mode
   (setq! lsp-headerline-breadcrumb-segments '(project file symbols))
@@ -211,7 +211,7 @@
         ("/epita-mail/Drafts" . ?d)
         ("/epita-mail/Trash"  . ?t)))
 
-(remove-hook! 'mu4e-compose-pre-hook #'org-msg-mode)
+(remove-hook 'mu4e-compose-pre-hook #'org-msg-mode)
 
 (set-email-account! "epita"
                     '(
@@ -249,11 +249,14 @@
   (setq mu4e-compose-format-flowed nil
         mu4e-view-use-gnus t))
 
-(setq gnus-fetch-old-headers t) ;; show unread groups
-(setq gnus-select-method '(nntp "news.cri.epita.fr"))
+(setq gnus-select-method '(nntp "news.cri.epita.fr" (nntp-port-number 119))
+      gnus-fetch-old-headers t ;; show unread groups
+      gnus-startup-file "~/News/newsrc-news.cri.epita.fr"
+      )
+
 (map! :leader
-      (:prefix-map ("o" . "open")
-       :desc "Gnus" "g" #'gnus))
+      :prefix "o"
+      :desc "Gnus" "g" #'gnus)
 
 (setq auth-sources '("~/.authinfo.gpg"))
 
