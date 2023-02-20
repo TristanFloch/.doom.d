@@ -29,7 +29,8 @@
 (setq doom-font (font-spec :family "Source Code Pro" :size 17)
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 18))
 
-(setq doom-theme 'doom-dracula)
+(setq catppuccin-flavor 'mocha) ;; or 'latte, 'macchiato, or 'frappe
+(setq doom-theme 'catppuccin)
 ;; (setq doom-palenight-padded-modeline t)
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-vibrant-padded-modeline t)
@@ -37,7 +38,7 @@
 (setq doom-themes-treemacs-theme "doom-colors")
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 (after! treemacs
-  (setq treemacs-show-cursor t))
+	(setq treemacs-show-cursor t))
 
 ;; (display-battery-mode t)
 
@@ -73,21 +74,21 @@
 
 (setq! fancy-splash-image (concat my/data-dir "doom-256.png"))
 
-(setq scroll-margin 10)
+(setq! scroll-margin 10)
 
-(setq org-directory "~/Documents/orgfiles/")
+(setq! org-directory "~/Documents/orgfiles/")
 (after! org
-  (require 'org-superstar)
+	(require 'org-superstar)
   (add-hook 'org-mode-hook (lambda() (org-superstar-mode 1)))
   (setq org-ellipsis " ▾"
-        ;; org-format-latex-options (plist-put org-format-latex-options :scale 0.55) ;; might be specific to my system
-        org-startup-folded t
-        org-cycle-include-plain-lists 'integrate
-        )
+	    ;; org-format-latex-options (plist-put org-format-latex-options :scale 0.55) ;; might be specific to my system
+	    org-startup-folded t
+	    org-cycle-include-plain-lists 'integrate
+	    )
   (add-to-list 'org-capture-templates
-               '("b" "Book" entry (file+headline "books.org" "Books")
-                 "* %^{Author} - %^{Title} %^g\n"
-                 :prepend t))
+		       '("b" "Book" entry (file+headline "books.org" "Books")
+		         "* %^{Author} - %^{Title} %^g\n"
+		         :prepend t))
   (add-to-list 'org-capture-templates
                '("l" "Link" entry (file+headline "links.org" "Links")
                  "* %x %^g\n"
@@ -95,43 +96,28 @@
                  :prepend t))
   )
 
-(after! org-gcal
-  (setq
-   org-gcal-auto-archive t
-   org-gcal-client-id "517191471377-0g7snp1jneht2s8tmqth900nf13t9vbl.apps.googleusercontent.com"
-   org-gcal-client-secret (my/file-to-string (concat my/data-dir "org-gcal-client-secret"))
-   org-gcal-fetch-file-alist (mapcar #'(lambda (key-val)
-                                         (let ((lhs (car key-val))
-                                               (rhs (concat org-directory "calendars/" (cdr key-val))))
-                                           (cons lhs rhs)))
-                                     '(("tristan.floch@gmail.com" . "gcal.org")
-                                       ("cvc5giinpq8llis9l19ur7e7kt6unuv2@import.calendar.google.com" . "gistre.org")
-                                       ("cttim40rtokh1rnr2msli7eusf8v7lls@import.calendar.google.com" . "shifts.org")
-                                       ("ppdgco17tdub1thuaeqq402c0n0s9nen@import.calendar.google.com" . "office-365.org")
-                                       ))))
-
 (after! company
-  (setq company-idle-delay 0))
+    (setq company-idle-delay 0))
 
 (after! org-agenda
-  (setq org-agenda-span 'week)
+	(setq org-agenda-span 'week)
   (setq org-agenda-start-with-log-mode '(clock))
   (add-to-list 'org-agenda-files (concat org-directory "calendars/")))
 
 (after! org-download
-  (setq-default org-download-image-dir "./.images/")
-  (setq-default org-download-heading-lvl nil))
+  (setq-default org-download-image-dir "./.images/"
+                org-download-heading-lvl nil))
 
 (add-hook! '(c-mode c++-mode)
-  (c-set-style "user")
-  (after! lsp-mode
-    (setq! lsp-ui-sideline-show-code-actions nil))
-  )
+	   (c-set-style "user")
+	   (after! lsp-mode
+		   (setq! lsp-ui-sideline-show-code-actions nil))
+	   )
 
 (add-hook! c++-mode
-  (setq! flycheck-clang-language-standard "c++20")
-  (setq! flycheck-gcc-language-standard "c++20")
-  )
+	   (setq! flycheck-clang-language-standard "c++20")
+	   (setq! flycheck-gcc-language-standard "c++20")
+	   )
 
 (set-file-templates!
  '(c-mode :ignore t)
@@ -167,11 +153,11 @@
       :desc "Gnus" "g" #'gnus)
 
 (after! lsp-mode
-  (setq! lsp-headerline-breadcrumb-segments '(project file symbols))
-  (setq! lsp-headerline-breadcrumb-enable t)
-  (setq! lsp-ui-doc-show-with-cursor nil)
-  (setq! lsp-ui-doc-show-with-mouse t)
-  )
+	(setq! lsp-headerline-breadcrumb-segments '(project file symbols))
+	(setq! lsp-headerline-breadcrumb-enable t)
+	(setq! lsp-ui-doc-show-with-cursor nil)
+	(setq! lsp-ui-doc-show-with-mouse t)
+	)
 
 (with-eval-after-load 'compile
   (define-key compilation-mode-map (kbd "h") nil)
