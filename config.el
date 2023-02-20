@@ -38,7 +38,7 @@
 (setq doom-themes-treemacs-theme "doom-colors")
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 (after! treemacs
-	(setq treemacs-show-cursor t))
+  (setq treemacs-show-cursor t))
 
 ;; (display-battery-mode t)
 
@@ -78,29 +78,28 @@
 
 (setq! org-directory "~/Documents/orgfiles/")
 (after! org
-	(require 'org-superstar)
+  (require 'org-superstar)
   (add-hook 'org-mode-hook (lambda() (org-superstar-mode 1)))
   (setq org-ellipsis " ▾"
-	    ;; org-format-latex-options (plist-put org-format-latex-options :scale 0.55) ;; might be specific to my system
-	    org-startup-folded t
-	    org-cycle-include-plain-lists 'integrate
-	    )
+        ;; org-format-latex-options (plist-put org-format-latex-options :scale 0.55) ;; might be specific to my system
+        org-startup-folded t
+        org-cycle-include-plain-lists 'integrate
+        )
   (add-to-list 'org-capture-templates
-		       '("b" "Book" entry (file+headline "books.org" "Books")
-		         "* %^{Author} - %^{Title} %^g\n"
-		         :prepend t))
+               '("b" "Book" entry (file+headline "books.org" "Books")
+                 "* %^{Author} - %^{Title} %^g\n"
+                 :prepend t))
   (add-to-list 'org-capture-templates
                '("l" "Link" entry (file+headline "links.org" "Links")
-                 "* %x %^g\n"
+                 "* [[%x][%^{Description}]] %^g\n"
                  :immediate-finish t
-                 :prepend t))
-  )
+                 :prepend t)))
 
 (after! company
-    (setq company-idle-delay 0))
+  (setq company-idle-delay 0))
 
 (after! org-agenda
-	(setq org-agenda-span 'week)
+  (setq org-agenda-span 'week)
   (setq org-agenda-start-with-log-mode '(clock))
   (add-to-list 'org-agenda-files (concat org-directory "calendars/")))
 
@@ -109,15 +108,15 @@
                 org-download-heading-lvl nil))
 
 (add-hook! '(c-mode c++-mode)
-	   (c-set-style "user")
-	   (after! lsp-mode
-		   (setq! lsp-ui-sideline-show-code-actions nil))
-	   )
+  (c-set-style "user")
+  (after! lsp-mode
+    (setq! lsp-ui-sideline-show-code-actions nil))
+  )
 
 (add-hook! c++-mode
-	   (setq! flycheck-clang-language-standard "c++20")
-	   (setq! flycheck-gcc-language-standard "c++20")
-	   )
+  (setq! flycheck-clang-language-standard "c++20")
+  (setq! flycheck-gcc-language-standard "c++20")
+  )
 
 (set-file-templates!
  '(c-mode :ignore t)
@@ -153,11 +152,11 @@
       :desc "Gnus" "g" #'gnus)
 
 (after! lsp-mode
-	(setq! lsp-headerline-breadcrumb-segments '(project file symbols))
-	(setq! lsp-headerline-breadcrumb-enable t)
-	(setq! lsp-ui-doc-show-with-cursor nil)
-	(setq! lsp-ui-doc-show-with-mouse t)
-	)
+  (setq! lsp-headerline-breadcrumb-segments '(project file symbols))
+  (setq! lsp-headerline-breadcrumb-enable t)
+  (setq! lsp-ui-doc-show-with-cursor nil)
+  (setq! lsp-ui-doc-show-with-mouse t)
+  )
 
 (with-eval-after-load 'compile
   (define-key compilation-mode-map (kbd "h") nil)
