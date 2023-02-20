@@ -29,7 +29,8 @@
 (setq doom-font (font-spec :family "Source Code Pro" :size 17)
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 18))
 
-(setq doom-theme 'doom-dracula)
+(setq catppuccin-flavor 'mocha) ;; or 'latte, 'macchiato, or 'frappe
+(setq doom-theme 'catppuccin)
 ;; (setq doom-palenight-padded-modeline t)
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-vibrant-padded-modeline t)
@@ -37,7 +38,7 @@
 (setq doom-themes-treemacs-theme "doom-colors")
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 (after! treemacs
-  (setq treemacs-show-cursor t))
+	(setq treemacs-show-cursor t))
 
 ;; (display-battery-mode t)
 
@@ -73,51 +74,35 @@
 
 (setq! fancy-splash-image (concat my/data-dir "doom-256.png"))
 
-(setq scroll-margin 10)
+(setq! scroll-margin 10)
 
-(setq org-directory "~/Documents/orgfiles/")
+(setq! org-directory "~/Documents/orgfiles/")
 (after! org
-  (require 'org-superstar)
+	(require 'org-superstar)
   (add-hook 'org-mode-hook (lambda() (org-superstar-mode 1)))
   (setq org-ellipsis " ▾"
-        ;; org-format-latex-options (plist-put org-format-latex-options :scale 0.55) ;; might be specific to my system
-        org-startup-folded t
-        org-cycle-include-plain-lists 'integrate
-        )
+	    ;; org-format-latex-options (plist-put org-format-latex-options :scale 0.55) ;; might be specific to my system
+	    org-startup-folded t
+	    org-cycle-include-plain-lists 'integrate
+	    )
   (add-to-list 'org-capture-templates
-               '("b" "Book" entry (file+headline "books.org" "Books")
-                 "* %^{Author} - %^{Title} %^g\n"
-                 :prepend t))
+		       '("b" "Book" entry (file+headline "books.org" "Books")
+		         "* %^{Author} - %^{Title} %^g\n"
+		         :prepend t))
   (add-to-list 'org-capture-templates
-               '("l" "Link" entry (file+headline "links.org" "Links")
-                 "* %x %^g\n"
-                 :immediate-finish t
-                 :prepend t))
-  (org-add-link-type
+		       '("l" "Link" entry (file+headline "links.org" "Links")
+		         "* [[%x][%^{Description}]] %^g\n"
+		         :immediate-finish t
+		         :prepend t))
+  (org-link-set-parameters
    "latex-small-caps" nil
-   (lambda (path desc format)
-     (cond
-      ((eq format 'latex)
-       (format "\\textsc{%s}" desc))))) ;; the path should be left blank
+   (lambda (_ desc format)
+     (cond ((eq format 'latex)
+            (format "\\textsc{%s}" desc))))) ;; the path should be left blank
   )
 
-(after! org-gcal
-  (setq
-   org-gcal-auto-archive t
-   org-gcal-client-id "517191471377-0g7snp1jneht2s8tmqth900nf13t9vbl.apps.googleusercontent.com"
-   org-gcal-client-secret (my/file-to-string (concat my/data-dir "org-gcal-client-secret"))
-   org-gcal-fetch-file-alist (mapcar #'(lambda (key-val)
-                                         (let ((lhs (car key-val))
-                                               (rhs (concat org-directory "calendars/" (cdr key-val))))
-                                           (cons lhs rhs)))
-                                     '(("tristan.floch@gmail.com" . "gcal.org")
-                                       ("cvc5giinpq8llis9l19ur7e7kt6unuv2@import.calendar.google.com" . "gistre.org")
-                                       ("cttim40rtokh1rnr2msli7eusf8v7lls@import.calendar.google.com" . "shifts.org")
-                                       ("ppdgco17tdub1thuaeqq402c0n0s9nen@import.calendar.google.com" . "office-365.org")
-                                       ))))
-
 (after! company
-  (setq company-idle-delay 0))
+    (setq company-idle-delay 0))
 
 ;; (set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
 ;; (set-frame-parameter (selected-frame) 'alpha <both>)
@@ -131,40 +116,40 @@
 
 ;; Weekly view in the agenda and log of what I've done during the day
 (after! org-agenda
-  (setq org-agenda-span 'week)
+	(setq org-agenda-span 'week)
   (setq org-agenda-start-with-log-mode '(clock))
   (add-to-list 'org-agenda-files (concat org-directory "calendars/")))
 
 (after! org-download
-  (setq-default org-download-image-dir "./.images/"
-                setq-default org-download-heading-lvl nil))
+	(setq-default org-download-image-dir "./.images/"
+	 setq-default org-download-heading-lvl nil))
 
 (add-hook! '(c-mode c++-mode)
-  (c-set-style "user")
-  (after! lsp-mode
-    (setq! lsp-ui-sideline-show-code-actions nil))
-  )
+	   (c-set-style "user")
+	   (after! lsp-mode
+		   (setq! lsp-ui-sideline-show-code-actions nil))
+	   )
 
 (add-hook! c++-mode
-  (setq! flycheck-clang-language-standard "c++20")
-  (setq! flycheck-gcc-language-standard "c++20")
-  )
+	   (setq! flycheck-clang-language-standard "c++20")
+	   (setq! flycheck-gcc-language-standard "c++20")
+	   )
 
 (add-hook! python-mode
-  (after! lsp-mode
-    (setq! lsp-pylsp-plugins-pylint-args '("--errors-only"))
-    )
-  )
+	   (after! lsp-mode
+		   (setq! lsp-pylsp-plugins-pylint-args '("--errors-only"))
+		   )
+	   )
 
 (set-file-templates!
- '(c-mode :ignore t)
- '("/main\\.c\\(?:c\\|pp\\)$" :ignore t)
- '("/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
- '("\\.c\\(?:c\\|pp\\)$" :ignore t)
- '("\\.h\\(?:h\\|pp\\|xx\\)$" :trigger "__pragma-once" :mode c++-mode)
- '("\\.h$" :trigger "__h" :mode c-mode)
- '("/Makefile$" :ignore t)
- )
+  '(c-mode :ignore t)
+  '("/main\\.c\\(?:c\\|pp\\)$" :ignore t)
+  '("/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
+  '("\\.c\\(?:c\\|pp\\)$" :ignore t)
+  '("\\.h\\(?:h\\|pp\\|xx\\)$" :trigger "__pragma-once" :mode c++-mode)
+  '("\\.h$" :trigger "__h" :mode c-mode)
+  '("/Makefile$" :ignore t)
+  )
 
 (map! :leader
       :prefix "t"
@@ -187,72 +172,20 @@
 ;;                    "C-c" 'nodejs-repl-send-buffer))
 
 (after! lsp-mode
-  (setq! lsp-headerline-breadcrumb-segments '(project file symbols))
-  (setq! lsp-headerline-breadcrumb-enable t)
-  (setq! lsp-ui-doc-show-with-cursor nil)
-  (setq! lsp-ui-doc-show-with-mouse t)
-  )
+	(setq! lsp-headerline-breadcrumb-segments '(project file symbols))
+	(setq! lsp-headerline-breadcrumb-enable t)
+	(setq! lsp-ui-doc-show-with-cursor nil)
+	(setq! lsp-ui-doc-show-with-mouse t)
+	)
 
 ;; (map! :after neotree-mode
 ;;       :map neotree-mode-map
 ;;       "v" #'neotree-enter-vertical-split)
 
 (with-eval-after-load 'compile
-  (define-key compilation-mode-map (kbd "h") nil)
-  (define-key compilation-mode-map (kbd "0") nil)
-  (setq compilation-scroll-output t))
-
-(setq mu4e-get-mail-command "mbsync -c ~/.config/mu4e/mbsyncrc -a"
-      mu4e-update-interval  300
-      message-send-mail-function 'smtpmail-send-it
-      mu4e-maildir-shortcuts
-      '(("/epita-mail/Inbox"  . ?i)
-        ("/epita-mail/Sent"   . ?s)
-        ("/epita-mail/Drafts" . ?d)
-        ("/epita-mail/Trash"  . ?t)))
-
-(remove-hook 'mu4e-compose-pre-hook #'org-msg-mode)
-
-(set-email-account! "epita"
-                    '(
-                      (mu4e-sent-folder         . "/epita-mail/Sent")
-                      (mu4e-drafts-folder       . "/epita-mail/Drafts")
-                      (mu4e-trash-folder        . "/epita-mail/Trash")
-                      (smtpmail-smtp-server     . "smtp.office365.com")
-                      (smtpmail-smtp-service    . 587)
-                      (smtpmail-stream-type     . starttls)
-                      (user-mail-address        . "tristan.floch@epita.fr")
-                      )
-                    t)
-
-(defconst message-cite-style-custom
-  '((message-cite-function          'message-cite-original-without-signature)
-    (message-citation-line-function 'message-insert-formatted-citation-line)
-    (message-cite-reply-position    'traditional)
-    (message-yank-prefix            "> ")
-    (message-yank-cited-prefix      "> ")
-    (message-yank-empty-prefix      ">")
-    (message-citation-line-format   "%f writes:"))
-  "Message citation style used for email. Use with `message-cite-style'.")
-
-(after! message
-  (setq message-cite-style message-cite-style-custom
-        message-cite-function          'message-cite-original-without-signature
-        message-citation-line-function 'message-insert-formatted-citation-line
-        message-cite-reply-position    'traditional
-        message-yank-prefix            "> "
-        message-yank-cited-prefix      "> "
-        message-yank-empty-prefix      ">"
-        message-citation-line-format   "%f writes:"))
-
-(after! mu4e
-  (setq mu4e-compose-format-flowed nil
-        mu4e-view-use-gnus t))
-
-(setq gnus-select-method '(nntp "news.cri.epita.fr" (nntp-port-number 119))
-      gnus-fetch-old-headers t ;; show unread groups
-      gnus-startup-file "~/News/newsrc-news.cri.epita.fr"
-      )
+		      (define-key compilation-mode-map (kbd "h") nil)
+		      (define-key compilation-mode-map (kbd "0") nil)
+		      (setq compilation-scroll-output t))
 
 (map! :leader
       :prefix "o"
@@ -264,29 +197,10 @@
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 ;; (add-hook 'nix-mode-hook #'lsp) ; make opening nix files laggy
 
-(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-
-(after! lsp-python-ms
-  (setq lsp-python-ms-executable (executable-find "python-language-server"))
-  (set-lsp-priority! 'mspyls 1))
-
-(add-hook 'rustic-mode-hook
-          (lambda() (setq rustic-cargo-bin (executable-find "cargo"))))
-
 (setq-hook! 'nix-mode-hook +format-with-lsp nil)
 
 (after! org-noter
-  (map! :map pdf-view-mode-map
-        :ni "i" 'org-noter-insert-note)
-  (setq! org-noter-always-create-frame nil
-         org-noter-doc-split-fraction '(0.6 0.4)))
-
-(defun my/org-present-mode ()
-  "Present an org file using big font and zen mode"
-  (interactive)
-  (if (eq major-mode 'org-mode)
-      (progn;; (+zen/toggle-fullscreen)
-        (setq display-line-numbers nil)
-        (doom-big-font-mode 1)
-        (+zen/toggle-fullscreen))
-    (message "Org mode is not enabled in this buffer")))
+	(map! :map pdf-view-mode-map
+	      :ni "i" 'org-noter-insert-note)
+	(setq! org-noter-always-create-frame nil
+	       org-noter-doc-split-fraction '(0.6 0.4)))
