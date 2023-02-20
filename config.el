@@ -38,7 +38,7 @@
 (setq doom-themes-treemacs-theme "doom-colors")
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 (after! treemacs
-	(setq treemacs-show-cursor t))
+  (setq treemacs-show-cursor t))
 
 ;; (display-battery-mode t)
 
@@ -78,22 +78,22 @@
 
 (setq! org-directory "~/Documents/orgfiles/")
 (after! org
-	(require 'org-superstar)
+  (require 'org-superstar)
   (add-hook 'org-mode-hook (lambda() (org-superstar-mode 1)))
   (setq org-ellipsis " ▾"
-	    ;; org-format-latex-options (plist-put org-format-latex-options :scale 0.55) ;; might be specific to my system
-	    org-startup-folded t
-	    org-cycle-include-plain-lists 'integrate
-	    )
+        ;; org-format-latex-options (plist-put org-format-latex-options :scale 0.55) ;; might be specific to my system
+        org-startup-folded t
+        org-cycle-include-plain-lists 'integrate
+        )
   (add-to-list 'org-capture-templates
-		       '("b" "Book" entry (file+headline "books.org" "Books")
-		         "* %^{Author} - %^{Title} %^g\n"
-		         :prepend t))
+               '("b" "Book" entry (file+headline "books.org" "Books")
+                 "* %^{Author} - %^{Title} %^g\n"
+                 :prepend t))
   (add-to-list 'org-capture-templates
-		       '("l" "Link" entry (file+headline "links.org" "Links")
-		         "* [[%x][%^{Description}]] %^g\n"
-		         :immediate-finish t
-		         :prepend t))
+               '("l" "Link" entry (file+headline "links.org" "Links")
+                 "* [[%x][%^{Description}]] %^g\n"
+                 :immediate-finish t
+                 :prepend t))
   (org-link-set-parameters
    "latex-small-caps" nil
    (lambda (_ desc format)
@@ -102,7 +102,7 @@
   )
 
 (after! company
-    (setq company-idle-delay 0))
+  (setq company-idle-delay 0))
 
 ;; (set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
 ;; (set-frame-parameter (selected-frame) 'alpha <both>)
@@ -116,40 +116,40 @@
 
 ;; Weekly view in the agenda and log of what I've done during the day
 (after! org-agenda
-	(setq org-agenda-span 'week)
+  (setq org-agenda-span 'week)
   (setq org-agenda-start-with-log-mode '(clock))
   (add-to-list 'org-agenda-files (concat org-directory "calendars/")))
 
 (after! org-download
-	(setq-default org-download-image-dir "./.images/"
-	 setq-default org-download-heading-lvl nil))
+  (setq-default org-download-image-dir "./.images/"
+                setq-default org-download-heading-lvl nil))
 
 (add-hook! '(c-mode c++-mode)
-	   (c-set-style "user")
-	   (after! lsp-mode
-		   (setq! lsp-ui-sideline-show-code-actions nil))
-	   )
+  (c-set-style "user")
+  (after! lsp-mode
+    (setq! lsp-ui-sideline-show-code-actions nil))
+  )
 
 (add-hook! c++-mode
-	   (setq! flycheck-clang-language-standard "c++20")
-	   (setq! flycheck-gcc-language-standard "c++20")
-	   )
+  (setq! flycheck-clang-language-standard "c++20")
+  (setq! flycheck-gcc-language-standard "c++20")
+  )
 
 (add-hook! python-mode
-	   (after! lsp-mode
-		   (setq! lsp-pylsp-plugins-pylint-args '("--errors-only"))
-		   )
-	   )
+  (after! lsp-mode
+    (setq! lsp-pylsp-plugins-pylint-args '("--errors-only"))
+    )
+  )
 
 (set-file-templates!
-  '(c-mode :ignore t)
-  '("/main\\.c\\(?:c\\|pp\\)$" :ignore t)
-  '("/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
-  '("\\.c\\(?:c\\|pp\\)$" :ignore t)
-  '("\\.h\\(?:h\\|pp\\|xx\\)$" :trigger "__pragma-once" :mode c++-mode)
-  '("\\.h$" :trigger "__h" :mode c-mode)
-  '("/Makefile$" :ignore t)
-  )
+ '(c-mode :ignore t)
+ '("/main\\.c\\(?:c\\|pp\\)$" :ignore t)
+ '("/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
+ '("\\.c\\(?:c\\|pp\\)$" :ignore t)
+ '("\\.h\\(?:h\\|pp\\|xx\\)$" :trigger "__pragma-once" :mode c++-mode)
+ '("\\.h$" :trigger "__h" :mode c-mode)
+ '("/Makefile$" :ignore t)
+ )
 
 (map! :leader
       :prefix "t"
@@ -172,20 +172,20 @@
 ;;                    "C-c" 'nodejs-repl-send-buffer))
 
 (after! lsp-mode
-	(setq! lsp-headerline-breadcrumb-segments '(project file symbols))
-	(setq! lsp-headerline-breadcrumb-enable t)
-	(setq! lsp-ui-doc-show-with-cursor nil)
-	(setq! lsp-ui-doc-show-with-mouse t)
-	)
+  (setq! lsp-headerline-breadcrumb-segments '(project file symbols))
+  (setq! lsp-headerline-breadcrumb-enable t)
+  (setq! lsp-ui-doc-show-with-cursor nil)
+  (setq! lsp-ui-doc-show-with-mouse t)
+  )
 
 ;; (map! :after neotree-mode
 ;;       :map neotree-mode-map
 ;;       "v" #'neotree-enter-vertical-split)
 
 (with-eval-after-load 'compile
-		      (define-key compilation-mode-map (kbd "h") nil)
-		      (define-key compilation-mode-map (kbd "0") nil)
-		      (setq compilation-scroll-output t))
+  (define-key compilation-mode-map (kbd "h") nil)
+  (define-key compilation-mode-map (kbd "0") nil)
+  (setq compilation-scroll-output t))
 
 (map! :leader
       :prefix "o"
@@ -200,7 +200,7 @@
 (setq-hook! 'nix-mode-hook +format-with-lsp nil)
 
 (after! org-noter
-	(map! :map pdf-view-mode-map
-	      :ni "i" 'org-noter-insert-note)
-	(setq! org-noter-always-create-frame nil
-	       org-noter-doc-split-fraction '(0.6 0.4)))
+  (map! :map pdf-view-mode-map
+        :ni "i" 'org-noter-insert-note)
+  (setq! org-noter-always-create-frame nil
+         org-noter-doc-split-fraction '(0.6 0.4)))
