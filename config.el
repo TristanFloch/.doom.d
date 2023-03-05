@@ -93,12 +93,6 @@
                  "* %x %^g\n"
                  :immediate-finish t
                  :prepend t))
-  (org-add-link-type
-   "latex-small-caps" nil
-   (lambda (path desc format)
-     (cond
-      ((eq format 'latex)
-       (format "\\textsc{%s}" desc))))) ;; the path should be left blank
   )
 
 (after! org-gcal
@@ -119,25 +113,14 @@
 (after! company
   (setq company-idle-delay 0))
 
-;; (set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
-;; (set-frame-parameter (selected-frame) 'alpha <both>)
-;; (set-frame-parameter (selected-frame) 'alpha '(85 . 85))
-;; (add-to-list 'default-frame-alist '(alpha . (85 . 85)))
-
-;; Change the binding of the Org capture
-(map! :leader
-      :desc "Org Capture"           "x" #'org-capture
-      :desc "Pop up scratch buffer" "X" #'doom/open-scratch-buffer)
-
-;; Weekly view in the agenda and log of what I've done during the day
 (after! org-agenda
   (setq org-agenda-span 'week)
   (setq org-agenda-start-with-log-mode '(clock))
   (add-to-list 'org-agenda-files (concat org-directory "calendars/")))
 
 (after! org-download
-  (setq-default org-download-image-dir "./.images/"
-                setq-default org-download-heading-lvl nil))
+  (setq-default org-download-image-dir "./.images/")
+  (setq-default org-download-heading-lvl nil))
 
 (add-hook! '(c-mode c++-mode)
   (c-set-style "user")
@@ -150,14 +133,10 @@
   (setq! flycheck-gcc-language-standard "c++20")
   )
 
-(add-hook! python-mode
-  (after! lsp-mode
-    (setq! lsp-pylsp-plugins-pylint-args '("--errors-only"))
-    )
-  )
-
 (set-file-templates!
  '(c-mode :ignore t)
+ '("\\.sh$" :ignore t)
+ '("\\.py$" :ignore t)
  '("/main\\.c\\(?:c\\|pp\\)$" :ignore t)
  '("/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
  '("\\.c\\(?:c\\|pp\\)$" :ignore t)
@@ -166,11 +145,16 @@
  '("/Makefile$" :ignore t)
  )
 
+;; Switch org capture and scratch buffer
+(map! :leader
+      :desc "Org Capture"           "x" #'org-capture
+      :desc "Pop up scratch buffer" "X" #'doom/open-scratch-buffer)
+
 (map! :leader
       :prefix "t"
       :desc "Doom modeline" "m" #'hide-mode-line-mode
       :desc "Vimish fold" "z" 'vimish-fold-toggle
-      )
+      :desc "Auto completion" "a" #'+company/toggle-auto-completion)
 
 (map! :after projectile
       :leader
@@ -179,12 +163,8 @@
 
 (map! :leader
       :prefix "o"
-      :desc "Calculator" "c" 'calc)
-
-;; (map! :after rjsx-mode
-;;       :map rjsx-mode-map
-;;       (:prefix-map "C-c"
-;;                    "C-c" 'nodejs-repl-send-buffer))
+      :desc "Calculator" "c" 'calc
+      :desc "Gnus" "g" #'gnus)
 
 (after! lsp-mode
   (setq! lsp-headerline-breadcrumb-segments '(project file symbols))
@@ -193,78 +173,16 @@
   (setq! lsp-ui-doc-show-with-mouse t)
   )
 
-;; (map! :after neotree-mode
-;;       :map neotree-mode-map
-;;       "v" #'neotree-enter-vertical-split)
-
 (with-eval-after-load 'compile
   (define-key compilation-mode-map (kbd "h") nil)
   (define-key compilation-mode-map (kbd "0") nil)
   (setq compilation-scroll-output t))
-
-(setq mu4e-get-mail-command "mbsync -c ~/.config/mu4e/mbsyncrc -a"
-      mu4e-update-interval  300
-      message-send-mail-function 'smtpmail-send-it
-      mu4e-maildir-shortcuts
-      '(("/epita-mail/Inbox"  . ?i)
-        ("/epita-mail/Sent"   . ?s)
-        ("/epita-mail/Drafts" . ?d)
-        ("/epita-mail/Trash"  . ?t)))
-
-(remove-hook 'mu4e-compose-pre-hook #'org-msg-mode)
-
-(set-email-account! "epita"
-                    '(
-                      (mu4e-sent-folder         . "/epita-mail/Sent")
-                      (mu4e-drafts-folder       . "/epita-mail/Drafts")
-                      (mu4e-trash-folder        . "/epita-mail/Trash")
-                      (smtpmail-smtp-server     . "smtp.office365.com")
-                      (smtpmail-smtp-service    . 587)
-                      (smtpmail-stream-type     . starttls)
-                      (user-mail-address        . "tristan.floch@epita.fr")
-                      )
-                    t)
-
-(defconst message-cite-style-custom
-  '((message-cite-function          'message-cite-original-without-signature)
-    (message-citation-line-function 'message-insert-formatted-citation-line)
-    (message-cite-reply-position    'traditional)
-    (message-yank-prefix            "> ")
-    (message-yank-cited-prefix      "> ")
-    (message-yank-empty-prefix      ">")
-    (message-citation-line-format   "%f writes:"))
-  "Message citation style used for email. Use with `message-cite-style'.")
-
-(after! message
-  (setq message-cite-style message-cite-style-custom
-        message-cite-function          'message-cite-original-without-signature
-        message-citation-line-function 'message-insert-formatted-citation-line
-        message-cite-reply-position    'traditional
-        message-yank-prefix            "> "
-        message-yank-cited-prefix      "> "
-        message-yank-empty-prefix      ">"
-        message-citation-line-format   "%f writes:"))
-
-(after! mu4e
-  (setq mu4e-compose-format-flowed nil
-        mu4e-view-use-gnus t))
-
-(setq gnus-select-method '(nntp "news.cri.epita.fr" (nntp-port-number 119))
-      gnus-fetch-old-headers t ;; show unread groups
-      gnus-startup-file "~/News/newsrc-news.cri.epita.fr"
-      )
-
-(map! :leader
-      :prefix "o"
-      :desc "Gnus" "g" #'gnus)
 
 (setq auth-sources '("~/.authinfo.gpg"))
 
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 ;; (add-hook 'nix-mode-hook #'lsp) ; make opening nix files laggy
-
-(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 
 (after! lsp-python-ms
   (setq lsp-python-ms-executable (executable-find "python-language-server"))
@@ -281,12 +199,5 @@
   (setq! org-noter-always-create-frame nil
          org-noter-doc-split-fraction '(0.6 0.4)))
 
-(defun my/org-present-mode ()
-  "Present an org file using big font and zen mode"
-  (interactive)
-  (if (eq major-mode 'org-mode)
-      (progn;; (+zen/toggle-fullscreen)
-        (setq display-line-numbers nil)
-        (doom-big-font-mode 1)
-        (+zen/toggle-fullscreen))
-    (message "Org mode is not enabled in this buffer")))
+(add-to-list 'auto-mode-alist '("\\.yuck\\'" . lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.rasi\\'" . css-mode))

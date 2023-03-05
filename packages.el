@@ -50,6 +50,5 @@
 ;(unpin! t)
 
 (package! csv-mode)
-;; (package! arduino-mode)
-(package! aggressive-indent-mode)
-(package! udev-mode)
+(package! catppuccin-theme)
+(package! meson-mode)
