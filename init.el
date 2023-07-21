@@ -30,7 +30,7 @@
        ;; deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
-       ;; doom-quit         ; DOOM quit-message prompts when you quit Emacs
+       doom-quit         ; DOOM quit-message prompts when you quit Emacs
        (emoji +unicode)  ; 🙂
        ;;fill-column       ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
@@ -88,7 +88,7 @@
        ;;ansible
        (debugger +lsp)          ; FIXME stepping through code, to help you add bugs
        direnv
-       docker
+       (docker +lsp)
        ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;; ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
@@ -154,14 +154,15 @@
        (org               ; organize your plain life in plain text
         +pretty
         +dragndrop
-        +jupyter
-        +pandoc
-        +noter)
+        ;; +jupyter
+        ;; +pandoc
+        ;; +noter
+        )
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python
-        +poetry
+        ;; +poetry
         +lsp
         +tree-sitter)            ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
@@ -170,9 +171,9 @@
        ;;rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       ;; (rust
-        ;; +lsp
-        ;; +tree-sitter)              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (rust
+        +lsp
+        +tree-sitter)              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;; (scala +lsp)            ; java, but good
        ;;scheme            ; a fully conniving family of lisps
        (sh
@@ -183,7 +184,9 @@
        ;; swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
        ;;web               ; the tubes
-       yaml              ; JSON, but readable
+       (yaml
+        +lsp               ; JSON, but readable
+        +tree-sitter)
 
        :email
        ;; (mu4e +gmail)
@@ -201,5 +204,5 @@
        :config
        ;;literate
        (default
-        +bindings
-        +smartparens))
+         +bindings
+         +smartparens))
