@@ -29,8 +29,8 @@
 (setq doom-font (font-spec :family "Source Code Pro" :size 17)
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 18))
 
-(setq catppuccin-flavor 'mocha) ;; or 'latte, 'macchiato, or 'frappe
-(setq doom-theme 'catppuccin)
+;; (setq catppuccin-flavor 'mocha) ;; or 'latte, 'macchiato, or 'frappe
+(setq doom-theme 'doom-tokyo-night)
 ;; (setq doom-palenight-padded-modeline t)
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-vibrant-padded-modeline t)
