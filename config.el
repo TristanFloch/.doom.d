@@ -137,6 +137,7 @@
 
 (set-file-templates!
  '(c-mode :ignore t)
+ '("\\.py$" :ignore t)
  '("/main\\.c\\(?:c\\|pp\\)$" :ignore t)
  '("/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
  '("\\.c\\(?:c\\|pp\\)$" :ignore t)
