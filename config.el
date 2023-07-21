@@ -138,8 +138,9 @@
 (map! :leader
       :prefix "t"
       :desc "Doom modeline" "m" #'hide-mode-line-mode
-      :desc "Vimish fold" "z" 'vimish-fold-toggle
-      :desc "Auto completion" "a" #'+company/toggle-auto-completion)
+      :desc "Toggle company autocompletion" "a" #'+company/toggle-auto-completion
+      :desc "Zen mode" "z" #'+zen/toggle
+      )
 
 (map! :after projectile
       :leader
@@ -148,8 +149,18 @@
 
 (map! :leader
       :prefix "o"
-      :desc "Calculator" "c" 'calc
-      :desc "Gnus" "g" #'gnus)
+      :desc "Calculator" "c" 'calc)
+
+(map! :after persp-mode
+      :leader
+      :prefix "TAB"
+      :desc "Swap workspace left" "H" '+workspace/swap-left
+      :desc "Swap workspace right" "L" '+workspace/swap-right)
+
+;; (map! :after rjsx-mode
+;;       :map rjsx-mode-map
+;;       (:prefix-map "C-c"
+;;                    "C-c" 'nodejs-repl-send-buffer))
 
 (after! lsp-mode
   (setq! lsp-headerline-breadcrumb-segments '(project file symbols))
