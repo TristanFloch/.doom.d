@@ -181,6 +181,12 @@
   (define-key compilation-mode-map (kbd "0") nil)
   (setq compilation-scroll-output t))
 
+(setq-hook! '(eshell-mode-hook shell-mode-hook)
+  company-idle-delay nil)
+
+(map! :i
+      "M-/" #'+company/complete)
+
 (map! :leader
       :prefix "o"
       :desc "Gnus" "g" #'gnus)
