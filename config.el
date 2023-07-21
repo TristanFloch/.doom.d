@@ -93,13 +93,7 @@
                '("l" "Link" entry (file+headline "links.org" "Links")
                  "* [[%x][%^{Description}]] %^g\n"
                  :immediate-finish t
-                 :prepend t))
-  (org-link-set-parameters
-   "latex-small-caps" nil
-   (lambda (_ desc format)
-     (cond ((eq format 'latex)
-            (format "\\textsc{%s}" desc))))) ;; the path should be left blank
-  )
+                 :prepend t)))
 
 (after! company
   (setq company-idle-delay 0))
