@@ -98,17 +98,6 @@
 (after! company
   (setq company-idle-delay 0))
 
-;; (set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
-;; (set-frame-parameter (selected-frame) 'alpha <both>)
-;; (set-frame-parameter (selected-frame) 'alpha '(85 . 85))
-;; (add-to-list 'default-frame-alist '(alpha . (85 . 85)))
-
-;; Change the binding of the Org capture
-(map! :leader
-      :desc "Org Capture"           "x" #'org-capture
-      :desc "Pop up scratch buffer" "X" #'doom/open-scratch-buffer)
-
-;; Weekly view in the agenda and log of what I've done during the day
 (after! org-agenda
   (setq org-agenda-span 'week)
   (setq org-agenda-start-with-log-mode '(clock))
@@ -116,7 +105,7 @@
 
 (after! org-download
   (setq-default org-download-image-dir "./.images/"
-                setq-default org-download-heading-lvl nil))
+                org-download-heading-lvl nil))
 
 (add-hook! '(c-mode c++-mode)
   (c-set-style "user")
@@ -129,14 +118,9 @@
   (setq! flycheck-gcc-language-standard "c++20")
   )
 
-(add-hook! python-mode
-  (after! lsp-mode
-    (setq! lsp-pylsp-plugins-pylint-args '("--errors-only"))
-    )
-  )
-
 (set-file-templates!
  '(c-mode :ignore t)
+ '("\\.sh$" :ignore t)
  '("\\.py$" :ignore t)
  '("/main\\.c\\(?:c\\|pp\\)$" :ignore t)
  '("/win32_\\.c\\(?:c\\|pp\\)$" :ignore t)
@@ -145,6 +129,11 @@
  '("\\.h$" :trigger "__h" :mode c-mode)
  '("/Makefile$" :ignore t)
  )
+
+;; Switch org capture and scratch buffer
+(map! :leader
+      :desc "Org Capture"           "x" #'org-capture
+      :desc "Pop up scratch buffer" "X" #'doom/open-scratch-buffer)
 
 (map! :leader
       :prefix "t"
@@ -180,10 +169,6 @@
   (setq! lsp-ui-doc-show-with-mouse t)
   )
 
-;; (map! :after neotree-mode
-;;       :map neotree-mode-map
-;;       "v" #'neotree-enter-vertical-split)
-
 (with-eval-after-load 'compile
   (define-key compilation-mode-map (kbd "h") nil)
   (define-key compilation-mode-map (kbd "0") nil)
@@ -194,10 +179,6 @@
 
 (map! :i
       "M-/" #'+company/complete)
-
-(map! :leader
-      :prefix "o"
-      :desc "Gnus" "g" #'gnus)
 
 (setq auth-sources '("~/.authinfo.gpg"))
 
