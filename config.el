@@ -130,44 +130,40 @@
  '("/Makefile$" :ignore t)
  )
 
-;; Switch org capture and scratch buffer
 (map! :leader
+
+      ;; switch org capture and scratch buffer
       :desc "Org Capture"           "x" #'org-capture
-      :desc "Pop up scratch buffer" "X" #'doom/open-scratch-buffer)
+      :desc "Pop up scratch buffer" "X" #'doom/open-scratch-buffer
 
-(map! :leader
-      :prefix "t"
-      :desc "Doom modeline" "m" #'hide-mode-line-mode
-      :desc "Toggle company autocompletion" "a" #'+company/toggle-auto-completion
-      :desc "Zen mode" "z" #'+zen/toggle
-      )
+      (:prefix "t"
+       :desc "Doom modeline" "m" #'hide-mode-line-mode
+       (:when (modulep! :completion company)
+         :map company-mode-map
+         :desc "Company autocompletion" "a" #'+company/toggle-auto-completion)
+       (:map org-mode-map
+        :desc "Zen mode" "z" #'+zen/toggle)
+       (:when (modulep! :tools lsp +eglot)
+         :map eglot-mode-map
+         :desc "Inlay hints mode" "h" #'eglot-inlay-hints-mode))
 
-(map! :after projectile
-      :leader
-      :prefix "s"
-      :desc "Replace in project" "R" 'projectile-replace-regexp)
+      (:prefix "o"
+       :desc "Calculator" "o" 'calc)
 
-(map! :leader
-      :prefix "o"
-      :desc "Calculator" "c" 'calc)
+      (:prefix "s"
+               (:map projectile-mode-map
+                :desc "Replace in project" "R" 'projectile-replace-regexp))
 
-(map! :after persp-mode
-      :leader
-      :prefix "TAB"
-      :desc "Swap workspace left" "H" '+workspace/swap-left
-      :desc "Swap workspace right" "L" '+workspace/swap-right)
-
-;; (map! :after rjsx-mode
-;;       :map rjsx-mode-map
-;;       (:prefix-map "C-c"
-;;                    "C-c" 'nodejs-repl-send-buffer))
+      (:prefix "TAB"
+               (:map persp-mode-map
+                :desc "Swap workspace left" "H" '+workspace/swap-left
+                :desc "Swap workspace right" "L" '+workspace/swap-right)))
 
 (after! lsp-mode
-  (setq! lsp-headerline-breadcrumb-segments '(project file symbols))
-  (setq! lsp-headerline-breadcrumb-enable t)
-  (setq! lsp-ui-doc-show-with-cursor nil)
-  (setq! lsp-ui-doc-show-with-mouse t)
-  )
+  (setq! lsp-headerline-breadcrumb-segments '(project file symbols)
+         lsp-headerline-breadcrumb-enable t
+         lsp-ui-doc-show-with-cursor nil
+         lsp-ui-doc-show-with-mouse t))
 
 (with-eval-after-load 'compile
   (define-key compilation-mode-map (kbd "h") nil)
