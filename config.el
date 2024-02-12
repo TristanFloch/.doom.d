@@ -189,3 +189,7 @@
         :ni "i" 'org-noter-insert-note)
   (setq! org-noter-always-create-frame nil
          org-noter-doc-split-fraction '(0.6 0.4)))
+
+(after! web-mode
+  (setq! typescript-indent-level 2
+         web-mode-code-indent-offset 2))
