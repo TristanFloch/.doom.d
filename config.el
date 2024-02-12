@@ -163,7 +163,15 @@
   (setq! lsp-headerline-breadcrumb-segments '(project file symbols)
          lsp-headerline-breadcrumb-enable t
          lsp-ui-doc-show-with-cursor nil
-         lsp-ui-doc-show-with-mouse t))
+         lsp-ui-doc-show-with-mouse t
+         lsp-clangd-binary-path "/usr/bin/clangd"
+         lsp-clients-clangd-args '("--enable-config"
+                                   "--clang-tidy"
+                                   "--header-insertion=never"
+                                   "--header-insertion-decorators=0"
+                                   "--limit-results=20"
+                                   "--pch-storage=memory")
+         ))
 
 (with-eval-after-load 'compile
   (define-key compilation-mode-map (kbd "h") nil)
@@ -182,7 +190,8 @@
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 ;; (add-hook 'nix-mode-hook #'lsp) ; make opening nix files laggy
 
-(setq-hook! 'nix-mode-hook +format-with-lsp nil)
+(setq-hook! '(nix-mode-hook c++-mode-hook c-mode-hook cuda-mode-hook python-mode-hook)
+  +format-with-lsp nil)
 
 (after! org-noter
   (map! :map pdf-view-mode-map

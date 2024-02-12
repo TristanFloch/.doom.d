@@ -50,3 +50,4 @@
 ;(unpin! t)
 
 (package! meson-mode)
+(package! csv-mode)
