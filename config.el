@@ -110,8 +110,7 @@
 (add-hook! '(c-mode c++-mode)
   (c-set-style "user")
   (after! lsp-mode
-    (setq! lsp-ui-sideline-show-code-actions nil))
-  )
+    (setq! lsp-ui-sideline-show-code-actions nil)))
 
 (add-hook! c++-mode
   (setq! flycheck-clang-language-standard "c++20")
@@ -202,3 +201,8 @@
 (after! web-mode
   (setq! typescript-indent-level 2
          web-mode-code-indent-offset 2))
+
+(use-package! magit
+  :config
+  (transient-append-suffix 'magit-push "-u"
+    '(1 "-s" "Skip GitLab pipeline" "--push-option=ci.skip")))
