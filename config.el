@@ -98,6 +98,11 @@
 (after! company
   (setq company-idle-delay 0))
 
+(after! corfu
+  (setq! corfu-auto-delay 0
+         corfu-preview-current nil
+         corfu-preselect t))
+
 (after! org-agenda
   (setq org-agenda-span 'week)
   (setq org-agenda-start-with-log-mode '(clock))
