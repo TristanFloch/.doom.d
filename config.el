@@ -122,6 +122,9 @@
   (setq! flycheck-gcc-language-standard "c++20")
   )
 
+;; (add-hook! prog-mode
+;;   (add-hook 'completion-at-point-functions #'codeium-completion-at-point))
+
 (set-file-templates!
  '(c-mode :ignore t)
  '("\\.sh$" :ignore t)

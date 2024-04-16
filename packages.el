@@ -51,3 +51,5 @@
 
 (package! meson-mode)
 (package! csv-mode)
+
+(package! codeium :recipe (:host github :repo "Exafunction/codeium.el"))
