@@ -101,7 +101,11 @@
 (after! corfu
   (setq! corfu-auto-delay 0
          corfu-preview-current nil
-         corfu-preselect t))
+         corfu-max-width 70
+         corfu-preselect t
+         tab-always-indent t
+         +corfu-want-minibuffer-completion nil
+         +corfu-want-tab-prefer-navigating-snippets t))
 
 (after! org-agenda
   (setq org-agenda-span 'week)
