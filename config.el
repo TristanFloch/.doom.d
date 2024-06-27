@@ -103,7 +103,6 @@
          corfu-preview-current nil
          corfu-max-width 70
          corfu-preselect t
-         tab-always-indent t
          +corfu-want-minibuffer-completion nil
          +corfu-want-tab-prefer-navigating-snippets t))
 
