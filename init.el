@@ -194,8 +194,8 @@
         +lsp
         +tree-sitter)      ; the tubes
        (yaml
-        +lsp               ; JSON, but readable
-        +tree-sitter)
+        ;; +lsp
+        +tree-sitter)      ; JSON, but readable
 
        :email
        ;; (mu4e +gmail)
