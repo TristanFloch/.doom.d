@@ -217,3 +217,13 @@
   :config
   (transient-append-suffix 'magit-push "-u"
     '(1 "-s" "Skip GitLab pipeline" "--push-option=ci.skip")))
+
+(use-package! lsp-dart
+  :after dart-mode
+  :config
+  (setq! lsp-dart-dap-flutter-hot-reload-on-save t)
+  (set-popup-rule! "\\*Flutter\\*"
+    :size 0.4
+    :select t
+    :ttl nil ; do not kill on dismiss
+    ))
