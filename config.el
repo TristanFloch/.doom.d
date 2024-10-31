@@ -228,3 +228,9 @@
     :select t
     :ttl nil ; do not kill on dismiss
     ))
+
+(after! dirvish
+  (setq! dirvish-quick-access-entries
+         `(("h" "~/"                          "Home")
+           ("d" "~/Downloads/"                "Downloads")
+           ("e" ,user-emacs-directory         "Emacs user directory"))))
