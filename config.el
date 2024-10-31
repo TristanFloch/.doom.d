@@ -158,7 +158,8 @@
          :desc "Inlay hints mode" "h" #'eglot-inlay-hints-mode))
 
       (:prefix "o"
-       :desc "Calculator" "o" 'calc)
+       :desc "Calculator" "c" 'calc
+       :desc "Project tree" "p" #'+treemacs/toggle)
 
       (:prefix "s"
                (:map projectile-mode-map
