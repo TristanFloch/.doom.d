@@ -159,7 +159,9 @@
 
       (:prefix "o"
        :desc "Calculator" "c" 'calc
-       :desc "Project tree" "p" #'+treemacs/toggle)
+       ;; :desc "Project tree" "p" #'+treemacs/toggle
+       ;; :desc "Find file in project sidebar" "P" #'treemacs-find-file
+       )
 
       (:prefix "s"
                (:map projectile-mode-map
@@ -233,4 +235,10 @@
   (setq! dirvish-quick-access-entries
          `(("h" "~/"                          "Home")
            ("d" "~/Downloads/"                "Downloads")
-           ("e" ,user-emacs-directory         "Emacs user directory"))))
+           ("e" ,user-emacs-directory         "Emacs user directory"))
+         ;; dirvish-attributes '(vc-state file-size nerd-icons subtree-state collapse)
+         )
+  (push 'collapse dirvish-attributes)
+  (custom-set-faces!
+    '(dirvish-hl-line :inherit treemacs-hl-line-face)) ; softer than default (which is highlight)
+  )
