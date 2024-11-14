@@ -219,7 +219,9 @@
 (use-package! magit
   :config
   (transient-append-suffix 'magit-push "-u"
-    '(1 "-s" "Skip GitLab pipeline" "--push-option=ci.skip")))
+    '(1 "-s" "Skip GitLab pipeline" "--push-option=ci.skip"))
+  (transient-append-suffix 'magit-push "-u"
+    '(2 "-t" "Follow-tags" "--follow-tags")))
 
 (use-package! lsp-dart
   :after dart-mode
