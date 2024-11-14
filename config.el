@@ -242,3 +242,6 @@
   (custom-set-faces!
     '(dirvish-hl-line :inherit treemacs-hl-line-face)) ; softer than default (which is highlight)
   )
+
+
+(setq-hook! 'sh-mode-hook +format-with nil)
