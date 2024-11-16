@@ -125,6 +125,8 @@
   (setq! flycheck-gcc-language-standard "c++20")
   )
 
+(setq-hook! 'rust-mode-hook +format-with 'lsp)
+
 ;; (add-hook! prog-mode
 ;;   (add-hook 'completion-at-point-functions #'codeium-completion-at-point))
 
