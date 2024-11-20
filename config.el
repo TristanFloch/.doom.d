@@ -249,3 +249,5 @@
 
 
 (setq-hook! 'sh-mode-hook +format-with nil)
+
+(add-to-list 'auto-mode-alist '("\\.spec\\(\\.in\\)?$" . prog-mode))
