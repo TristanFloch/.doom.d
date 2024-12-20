@@ -216,7 +216,9 @@
 
 (after! web-mode
   (setq! typescript-indent-level 2
-         web-mode-code-indent-offset 2))
+         css-indent-offset 2
+         web-mode-code-indent-offset 2
+         web-mode-css-indent-offset 2))
 
 (use-package! magit
   :config
@@ -249,5 +251,6 @@
 
 
 (setq-hook! 'sh-mode-hook +format-with nil)
+(setq-hook! 'css-mode-hook +format-inhibit t)
 
 (add-to-list 'auto-mode-alist '("\\.spec\\(\\.in\\)?$" . prog-mode))
