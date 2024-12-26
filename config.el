@@ -251,6 +251,6 @@
 
 
 (setq-hook! 'sh-mode-hook +format-with nil)
-(setq-hook! 'css-mode-hook +format-inhibit t)
+(setq-hook! '(css-mode-hook nix-mode-hook) +format-inhibit t)
 
 (add-to-list 'auto-mode-alist '("\\.spec\\(\\.in\\)?$" . prog-mode))
