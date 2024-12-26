@@ -254,3 +254,25 @@
 (setq-hook! '(css-mode-hook nix-mode-hook) +format-inhibit t)
 
 (add-to-list 'auto-mode-alist '("\\.spec\\(\\.in\\)?$" . prog-mode))
+
+(use-package! copilot
+  :bind
+  (:map copilot-mode-map
+        ("M-RET" . 'copilot-accept-completion)
+        ("M-<return>" . 'copilot-accept-completion)
+        ("M-f" . 'copilot-accept-completion-by-word)
+        ("M-l" . 'copilot-accept-completion-by-line)
+        ("C-f" . 'copilot-accept-completion-by-line)
+        ("M-J" . 'copilot-next-completion)
+        ("M-K" . 'copilot-previous-completion)
+        ("M-P" . 'copilot-panel-complete))
+  :config
+  (set-popup-rule! "\\*copilot-panel\\*"
+    :side 'right
+    :size 0.3
+    :select nil
+    :modeline nil
+    :ttl 'ignore
+    :quit t
+    )
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . lisp-indent-offset)))
