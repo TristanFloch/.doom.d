@@ -74,8 +74,6 @@
 
 (setq! fancy-splash-image (concat my/data-dir "doom-256.png"))
 
-(setq! scroll-margin 10)
-
 (setq! org-directory "~/Documents/orgfiles/")
 (after! org
   (require 'org-superstar)
@@ -276,3 +274,8 @@
     :quit t
     )
   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . lisp-indent-offset)))
+
+(use-package! ultra-scroll
+  :init (setq scroll-conservatively 101
+              scroll-margin 0)
+  :config (ultra-scroll-mode t))
