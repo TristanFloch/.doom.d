@@ -77,8 +77,8 @@
 
 (setq! org-directory "~/Documents/orgfiles/")
 (after! org
-  (require 'org-superstar)
-  (add-hook 'org-mode-hook (lambda() (org-superstar-mode 1)))
+  ;; (require 'org-superstar)
+  ;; (add-hook 'org-mode-hook (lambda() (org-superstar-mode 1)))
   (setq org-ellipsis " ▾"
         ;; org-format-latex-options (plist-put org-format-latex-options :scale 0.55) ;; might be specific to my system
         org-startup-folded t
