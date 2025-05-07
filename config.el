@@ -30,13 +30,14 @@
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 18))
 
 ;; (setq catppuccin-flavor 'mocha) ;; or 'latte, 'macchiato, or 'frappe
-(setq doom-theme 'doom-tokyo-night)
+;; (setq doom-theme 'doom-tokyo-night)
 ;; (setq doom-palenight-padded-modeline t)
-;; (setq doom-theme 'doom-vibrant)
-;; (setq doom-vibrant-padded-modeline t)
+(setq doom-theme 'doom-vibrant)
+(setq doom-vibrant-padded-modeline t)
 (doom-themes-org-config)
 (setq doom-themes-treemacs-theme "doom-colors")
 (setq doom-themes-treemacs-enable-variable-pitch nil)
+
 (after! treemacs
   (setq treemacs-show-cursor t))
 
@@ -253,6 +254,13 @@
 
 (add-to-list 'auto-mode-alist '("\\.spec\\(\\.in\\)?$" . prog-mode))
 
+(use-package! ultra-scroll
+  :init (setq scroll-conservatively 101
+              scroll-margin 0)
+  :config (ultra-scroll-mode t))
+
+(setq! shell-file-name (executable-find "fish"))
+
 (use-package! copilot
   :bind
   (:map copilot-mode-map
@@ -275,7 +283,7 @@
     )
   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . lisp-indent-offset)))
 
-(use-package! ultra-scroll
-  :init (setq scroll-conservatively 101
-              scroll-margin 0)
-  :config (ultra-scroll-mode t))
+(use-package! copilot-chat
+  :config (setq! copilot-chat-model "gpt-4o"
+                 copilot-chat-frontend 'org))
+
