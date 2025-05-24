@@ -178,14 +178,18 @@
          lsp-headerline-breadcrumb-enable t
          lsp-ui-doc-show-with-cursor nil
          lsp-ui-doc-show-with-mouse t
-         lsp-clangd-binary-path "/usr/bin/clangd"
+         lsp-clangd-binary-path (executable-find "clangd")
          lsp-clients-clangd-args '("--enable-config"
                                    "--clang-tidy"
                                    "--header-insertion=never"
                                    "--header-insertion-decorators=0"
                                    "--limit-results=20"
                                    "--pch-storage=memory")
+         lsp-pylsp-plugins-black-enabled t ; formatter
+         lsp-pylsp-plugins-flake8-enabled t ; linter
+         lsp-pylsp-plugins-mypy-enabled t ; type error hints
          ))
+
 
 (with-eval-after-load 'compile
   (define-key compilation-mode-map (kbd "h") nil)
@@ -204,8 +208,15 @@
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 ;; (add-hook 'nix-mode-hook #'lsp) ; make opening nix files laggy
 
-(setq-hook! '(nix-mode-hook c++-mode-hook c-mode-hook cuda-mode-hook python-mode-hook)
+(setq-hook! '(nix-mode-hook
+              cuda-mode-hook
+              python-mode-hook
+              ;; c++-mode-hook
+              ;; c-mode-hook
+              )
   +format-with-lsp nil)
+(setq-hook! 'python-mode-hook +format-with 'black)
+(setq! +format-on-save-disabled-modes '(python-mode))
 
 (after! org-noter
   (map! :map pdf-view-mode-map
@@ -281,7 +292,9 @@
     :ttl 'ignore
     :quit t
     )
-  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . lisp-indent-offset)))
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
+  (add-to-list 'copilot-indentation-alist '(nix-mode lisp-indent-offset))
+  (add-to-list 'copilot-indentation-alist '(markdown-mode 2)))
 
 (use-package! copilot-chat
   :config (setq! copilot-chat-model "gpt-4o"
