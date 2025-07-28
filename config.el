@@ -296,4 +296,5 @@
     )
   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
   (add-to-list 'copilot-indentation-alist '(nix-mode lisp-indent-offset))
-  (add-to-list 'copilot-indentation-alist '(markdown-mode 2)))
+  (add-to-list 'copilot-indentation-alist '(markdown-mode 2))
+  (add-to-list 'copilot-indentation-alist '(go-mode 4)))
