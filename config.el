@@ -216,7 +216,9 @@
               )
   +format-with-lsp nil)
 (setq-hook! 'python-mode-hook +format-with 'black)
-(setq! +format-on-save-disabled-modes '(python-mode))
+(setq! +format-on-save-disabled-modes
+       '(python-mode
+         protobuf-mode))
 
 (after! org-noter
   (map! :map pdf-view-mode-map
