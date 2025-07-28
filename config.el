@@ -295,8 +295,3 @@
   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
   (add-to-list 'copilot-indentation-alist '(nix-mode lisp-indent-offset))
   (add-to-list 'copilot-indentation-alist '(markdown-mode 2)))
-
-(use-package! copilot-chat
-  :config (setq! copilot-chat-model "gpt-4o"
-                 copilot-chat-frontend 'org))
-
