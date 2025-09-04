@@ -236,12 +236,18 @@
          web-mode-code-indent-offset 2
          web-mode-css-indent-offset 2))
 
-(use-package! magit
+(after! magit
   :config
   (transient-append-suffix 'magit-push "-u"
     '(1 "-s" "Skip GitLab pipeline" "--push-option=ci.skip"))
   (transient-append-suffix 'magit-push "-u"
-    '(2 "-t" "Follow-tags" "--follow-tags")))
+    '(2 "-t" "Follow-tags" "--follow-tags"))
+  (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
+  (after! code-review
+    (setq code-review-auth-login-marker 'forge))
+  (add-hook! code-review-mode
+    (persp-add-buffer (current-buffer))
+    #'emojify-mode))
 
 (use-package! lsp-dart
   :after dart-mode
