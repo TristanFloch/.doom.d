@@ -26,7 +26,7 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 
-(setq doom-font (font-spec :family "InconsolataGo Nerd Font Mono" :weight 'medium :size 20)
+(setq doom-font (font-spec :family "Iosevka Nerd Font Mono" :weight 'regular :size 17)
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :weight 'regular :size 18))
 
 ;; (setq catppuccin-flavor 'mocha) ;; or 'latte, 'macchiato, or 'frappe
