@@ -126,9 +126,6 @@
 
 (setq-hook! 'rust-mode-hook +format-with 'lsp)
 
-;; (add-hook! prog-mode
-;;   (add-hook 'completion-at-point-functions #'codeium-completion-at-point))
-
 (set-file-templates!
  '(c-mode :ignore t)
  '("\\.sh$" :ignore t)
@@ -281,6 +278,7 @@
 (setq! shell-file-name (executable-find "fish"))
 
 (use-package! copilot
+  :hook (prog-mode . copilot-mode)
   :bind
   (:map copilot-mode-map
         ("M-RET" . 'copilot-accept-completion)
