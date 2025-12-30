@@ -50,7 +50,6 @@
 ;; (unpin! t)
 
 (package! meson-mode)
-(package! csv-mode)
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 (package! ultra-scroll
