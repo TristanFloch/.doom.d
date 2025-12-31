@@ -117,7 +117,7 @@
 
        :os
        (:if IS-MAC macos)  ; improve compatibility with macOS
-       ;;tty               ; improve the terminal Emacs experience
+       tty               ; improve the terminal Emacs experience
 
        :lang
        ;;(beancount +lsp)         ; Mind the GAAP
@@ -222,4 +222,5 @@
        ;;literate
        (default
         +bindings
+        +gnupg
         +smartparens))
