@@ -144,6 +144,14 @@
       :desc "Org Capture"           "x" #'org-capture
       :desc "Pop up scratch buffer" "X" #'doom/open-scratch-buffer
 
+      (:prefix ("c m" . "monet")
+       :desc "Start server"     "s" #'monet-start-server
+       :desc "Stop server"      "q" #'monet-stop-server
+       :desc "Stop all servers" "Q" #'monet-stop-all-servers
+       :desc "List sessions"    "l" #'monet-list-sessions
+       :desc "Enable logging"   "L" #'monet-enable-logging
+       :desc "Disable logging"  "D" #'monet-disable-logging)
+
       (:prefix "t"
        :desc "Doom modeline" "m" #'hide-mode-line-mode
        (:when (modulep! :completion company)
@@ -304,7 +312,6 @@
   (add-to-list 'copilot-indentation-alist '(go-mode 4)))
 
 (use-package! monet
-  :hook (prog-mode . monet-mode)
   :config
   (monet-enable-logging)
   (setq monet-diff-tool nil)
