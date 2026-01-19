@@ -322,17 +322,40 @@
     :quit t)
 
   (defun monet--on-close-server-persist (session _ws)
-    "Handle WebSocket close for SESSION without removing the session.
+    "Handle WebSocket close without removing the session.
 Just clear the client so a new one can connect."
     (setf (monet--session-client session) nil)
-    (message "Monet: Claude disconnected from %s (session persisted)"
+    (message "[monet] Claude disconnected from %s (session persisted)"
              (monet--session-directory session)))
 
   (advice-add 'monet--on-close-server :override #'monet--on-close-server-persist)
 
   (defun monet--on-open-server-message (session _ws)
-    "Log a message when Claude connects to SESSION."
-    (message "Monet: Claude connected to %s"
+    "Log a message when Claude connects to a session."
+    (message "[monet] Claude connected to %s"
              (monet--session-directory session)))
 
-  (advice-add 'monet--on-open-server :after #'monet--on-open-server-message))
+  (advice-add 'monet--on-open-server :after #'monet--on-open-server-message)
+
+  (defun my/monet-project-key (dir)
+    "Get monet session key for project in DIR."
+    (file-name-nondirectory (directory-file-name dir)))
+
+  (defun my/monet-auto-start-h ()
+    "Start monet session for current project if not already running."
+    (when-let* ((context (monet--get-session-context))
+                (key (car context))
+                (dir (cdr context)))
+      (unless (monet--get-session key)
+        (monet-start-server-in-directory key dir))))
+
+  (defun my/monet-auto-stop-h (persp)
+    "Stop monet session when workspace PERSP is killed."
+    (when-let* ((project-dir (persp-parameter '+workspace-project persp))
+                (key (my/monet-project-key project-dir)))
+      (when (monet--get-session key)
+        (monet-stop-server key)
+        (message "[monet] Auto-stopped session for %s" key))))
+
+  (add-hook 'projectile-after-switch-project-hook #'my/monet-auto-start-h)
+  (add-hook 'persp-before-kill-functions #'my/monet-auto-stop-h))
