@@ -49,9 +49,11 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 
-(package! meson-mode)
+;; (package! meson-mode)
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 (package! ultra-scroll
   :recipe (:host github :repo "jdtsmith/ultra-scroll" :files ("*.el")))
 (package! protobuf-mode)
+(package! monet
+  :recipe (:host github :repo "stevemolitor/monet" :files ("*.el")))

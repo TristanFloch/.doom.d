@@ -302,3 +302,31 @@
   (add-to-list 'copilot-indentation-alist '(nix-mode 2))
   (add-to-list 'copilot-indentation-alist '(markdown-mode 2))
   (add-to-list 'copilot-indentation-alist '(go-mode 4)))
+
+(use-package! monet
+  :hook (prog-mode . monet-mode)
+  :config
+  (monet-enable-logging)
+  (setq monet-diff-tool nil)
+  (set-popup-rule! "\\*Monet Sessions\\*"
+    :side 'bottom
+    :size #'+popup-shrink-to-fit
+    :select t
+    :ttl 0
+    :quit t)
+
+  (defun monet--on-close-server-persist (session _ws)
+    "Handle WebSocket close for SESSION without removing the session.
+Just clear the client so a new one can connect."
+    (setf (monet--session-client session) nil)
+    (message "Monet: Claude disconnected from %s (session persisted)"
+             (monet--session-directory session)))
+
+  (advice-add 'monet--on-close-server :override #'monet--on-close-server-persist)
+
+  (defun monet--on-open-server-message (session _ws)
+    "Log a message when Claude connects to SESSION."
+    (message "Monet: Claude connected to %s"
+             (monet--session-directory session)))
+
+  (advice-add 'monet--on-open-server :after #'monet--on-open-server-message))
