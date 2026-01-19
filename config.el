@@ -313,7 +313,6 @@
 
 (use-package! monet
   :config
-  (monet-enable-logging)
   (setq monet-diff-tool nil)
   (set-popup-rule! "\\*Monet Sessions\\*"
     :side 'bottom
