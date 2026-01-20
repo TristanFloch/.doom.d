@@ -314,29 +314,16 @@
 
 (use-package! monet
   :config
-  (setq monet-diff-tool nil)
+  (setq monet-prefix-key nil ; redefined in keybindings section
+        monet-diff-tool nil
+        monet-persist-sessions t)
+
   (set-popup-rule! "\\*Monet Sessions\\*"
     :side 'bottom
     :size #'+popup-shrink-to-fit
     :select t
     :ttl 0
     :quit t)
-
-  (defun monet--on-close-server-persist (session _ws)
-    "Handle WebSocket close without removing the session.
-Just clear the client so a new one can connect."
-    (setf (monet--session-client session) nil)
-    (message "[monet] Claude disconnected from %s (session persisted)"
-             (monet--session-directory session)))
-
-  (advice-add 'monet--on-close-server :override #'monet--on-close-server-persist)
-
-  (defun monet--on-open-server-message (session _ws)
-    "Log a message when Claude connects to a session."
-    (message "[monet] Claude connected to %s"
-             (monet--session-directory session)))
-
-  (advice-add 'monet--on-open-server :after #'monet--on-open-server-message)
 
   (defun my/monet-project-key (dir)
     "Get monet session key for project in DIR."
