@@ -195,6 +195,41 @@
          lsp-pylsp-plugins-mypy-enabled t ; type error hints
          ))
 
+(after! flycheck-golangci-lint
+  ;; Redefine the checker to add the missing `:working-directory` property.
+  (flycheck-define-checker golangci-lint
+    "A Go syntax checker using golangci-lint.
+See URL `https://github.com/golangci/golangci-lint'."
+    :command ("golangci-lint" "run"
+              "--output.checkstyle.path=stdout"
+              "--output.text.path=stderr"
+              (option "--config=" flycheck-golangci-lint-config concat)
+              (option "--timeout=" flycheck-golangci-lint-deadline concat)
+              (option-flag "--tests" flycheck-golangci-lint-tests)
+              (option-flag "--fast-only" flycheck-golangci-lint-fast)
+              (option-flag "--allow-parallel-runners" flycheck-golangci-allow-parallel-runners)
+              (option-flag "--allow-serial-runners" flycheck-golangci-allow-serial-runners)
+              (option-flag "--default=none" flycheck-golangci-lint-disable-all)
+              (option-flag "--default=all" flycheck-golangci-lint-enable-all)
+              (option-list "--disable=" flycheck-golangci-lint-disable-linters concat)
+              (option-list "--enable=" flycheck-golangci-lint-enable-linters concat)
+              (eval (concat "./" (file-relative-name
+                                  (file-name-directory buffer-file-name)
+                                  (locate-dominating-file default-directory "go.mod")))))
+    :error-parser flycheck-parse-checkstyle
+    :error-patterns
+    ((error line-start (seq "level=error" (zero-or-more nonl) "[") (file-name) ":" line ":" column ": " (message) line-end)
+     (info line-start (seq "level=warning" (zero-or-more nonl) "[") (file-name) ":" line ":" column ": " (message) line-end)
+     (error line-start (file-name) ":" line ":" column ": " (message) line-end)
+     (error line-start (file-name) ":" line ":" (message) line-end))
+    :working-directory (lambda (_) (locate-dominating-file default-directory "go.mod"))
+    :modes (go-mode go-ts-mode)))
+
+(add-hook! 'lsp-after-open-hook
+  (when (and (derived-mode-p 'go-mode 'go-ts-mode)
+             (flycheck-valid-checker-p 'lsp)
+             (flycheck-valid-checker-p 'golangci-lint))
+    (flycheck-add-next-checker 'lsp 'golangci-lint)))
 
 (with-eval-after-load 'compile
   (define-key compilation-mode-map (kbd "h") nil)
