@@ -98,7 +98,7 @@
   (setq company-idle-delay 0))
 
 (after! corfu
-  (setq! corfu-auto-delay 0
+  (setq! corfu-auto-delay 0.1
          corfu-preview-current nil
          corfu-max-width 70
          corfu-preselect t
