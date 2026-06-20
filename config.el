@@ -195,6 +195,15 @@
          lsp-pylsp-plugins-mypy-enabled t ; type error hints
          ))
 
+;; Add-on, else it loses the primary slot to svelte-ls. Set before load.
+(setq lsp-tailwindcss-add-on-mode t)
+
+;; lsp-tailwindcss runs `node <server.js> --stdio`; point it at the Nix server
+;; (itself a node script) instead of its broken auto-download.
+(with-eval-after-load 'lsp-tailwindcss
+  (setopt lsp-tailwindcss-server-path
+          (expand-file-name "~/.nix-profile/bin/tailwindcss-language-server")))
+
 (after! flycheck-golangci-lint
   ;; Redefine the checker to add the missing `:working-directory` property.
   (flycheck-define-checker golangci-lint
@@ -382,3 +391,19 @@ See URL `https://github.com/golangci/golangci-lint'."
 
   (add-hook 'projectile-after-switch-project-hook #'my/monet-auto-start-h)
   (add-hook 'persp-before-kill-functions #'my/monet-auto-stop-h))
+
+(with-eval-after-load 'gptel
+  (defun my/gptel-api-key-from-environment (&optional var)
+    "From gptel's README:
+https://github.com/karthink/gptel?tab=readme-ov-file#optional-reading-api-keys-from-environment-variables"
+    (lambda ()
+      (getenv (or var                     ;provided key
+                  (thread-first           ;or fall back to <TYPE>_API_KEY
+                    (type-of gptel-backend)
+                    (symbol-name)
+                    (substring 6)
+                    (upcase)
+                    (concat "_API_KEY"))))))
+  (gptel-make-anthropic "Claude"
+    :key (my/gptel-api-key-from-environment "ANTHROPIC_API_KEY")
+    :stream t))
