@@ -356,41 +356,6 @@ See URL `https://github.com/golangci/golangci-lint'."
   (add-to-list 'copilot-indentation-alist '(markdown-mode 2))
   (add-to-list 'copilot-indentation-alist '(go-mode 4)))
 
-(use-package! monet
-  :config
-  (setq monet-prefix-key nil ; redefined in keybindings section
-        monet-diff-tool nil
-        monet-persist-sessions t)
-
-  (set-popup-rule! "\\*Monet Sessions\\*"
-    :side 'bottom
-    :size #'+popup-shrink-to-fit
-    :select t
-    :ttl 0
-    :quit t)
-
-  (defun my/monet-project-key (dir)
-    "Get monet session key for project in DIR."
-    (file-name-nondirectory (directory-file-name dir)))
-
-  (defun my/monet-auto-start-h ()
-    "Start monet session for current project if not already running."
-    (when-let* ((context (monet--get-session-context))
-                (key (car context))
-                (dir (cdr context)))
-      (unless (monet--get-session key)
-        (monet-start-server-in-directory key dir))))
-
-  (defun my/monet-auto-stop-h (persp)
-    "Stop monet session when workspace PERSP is killed."
-    (when-let* ((project-dir (persp-parameter '+workspace-project persp))
-                (key (my/monet-project-key project-dir)))
-      (when (monet--get-session key)
-        (monet-stop-server key)
-        (message "[monet] Auto-stopped session for %s" key))))
-
-  (add-hook 'projectile-after-switch-project-hook #'my/monet-auto-start-h)
-  (add-hook 'persp-before-kill-functions #'my/monet-auto-stop-h))
 
 (with-eval-after-load 'gptel
   (defun my/gptel-api-key-from-environment (&optional var)

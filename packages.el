@@ -55,8 +55,3 @@
 (package! ultra-scroll
   :recipe (:host github :repo "jdtsmith/ultra-scroll" :files ("*.el")))
 (package! protobuf-mode)
-(package! monet
-  :recipe (:host github
-           :repo "TristanFloch/monet"
-           :branch "feat/persist-sessions"
-           :files ("*.el")))
